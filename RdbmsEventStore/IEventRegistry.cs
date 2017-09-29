@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace RdbmsEventStore
 {
@@ -7,5 +8,7 @@ namespace RdbmsEventStore
         Type TypeFor(string eventType);
 
         string NameFor(Type eventType);
+
+        IReadOnlyDictionary<string, Type> Registrations { get; }
     }
 }
