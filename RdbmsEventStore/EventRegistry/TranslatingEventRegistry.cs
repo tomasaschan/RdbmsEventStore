@@ -25,16 +25,16 @@ namespace RdbmsEventStore.EventRegistry
 
         public Type TypeFor(string eventType)
             => _translations.TryGetValue(eventType, out var translated)
-                ? _registry.TypeFor(translated)
+                ? TypeFor(translated)
                 : _registry.TypeFor(eventType);
 
         public string NameFor(Type eventType)
-        {
-            var registeredName = _registry.NameFor(eventType);
-            return _translateNewEvents && _inverseTranslations.TryGetValue(registeredName, out var translated)
-                ? translated
+            => InverseTranslate(this._registry.NameFor(eventType));
+
+        private string InverseTranslate(string registeredName)
+            => _translateNewEvents && _inverseTranslations.TryGetValue(registeredName, out var translated)
+                ? InverseTranslate(translated)
                 : registeredName;
-        }
 
         public IReadOnlyDictionary<string, Type> Registrations
             => _registry
