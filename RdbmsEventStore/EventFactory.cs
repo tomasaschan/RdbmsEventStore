@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
@@ -11,7 +12,12 @@ namespace RdbmsEventStore
         {
         }
 
-        public virtual TEvent Create<T>(TId streamId, long version, T payload)
+        public virtual IEnumerable<TEvent> Create(TId streamId, long version, params object[] payloads)
+        {
+            return new EventCollection<TId, TEvent>(streamId, version, CreateSingle, payloads);
+        }
+
+        private TEvent CreateSingle(TId streamId, long version, object payload)
         {
             var writer = new StringWriter();
             serializer.Serialize(writer, payload);
@@ -20,7 +26,7 @@ namespace RdbmsEventStore
                 StreamId = streamId,
                 Timestamp = DateTimeOffset.UtcNow,
                 Version = version,
-                Type = _registry.NameFor(typeof(T)),
+                Type = _registry.NameFor(payload.GetType()),
                 Payload = Encoding.UTF8.GetBytes(writer.ToString())
             };
         }

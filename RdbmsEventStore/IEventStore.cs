@@ -23,6 +23,6 @@ namespace RdbmsEventStore
         where TId : IEquatable<TId>
         where TEvent : IEvent<TId>
     {
-        Task Commit<T>(TId streamId, params T[] payloads);
+        Task Commit(TId streamId, long versionBefore, params object[] payloads);
     }
 }

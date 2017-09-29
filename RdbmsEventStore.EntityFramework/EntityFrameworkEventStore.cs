@@ -31,7 +31,7 @@ namespace RdbmsEventStore.EntityFramework
                 .AsNoTracking()
                 .ToListAsync();
 
-        public async Task Commit<T>(TId streamId, params T[] payloads)
+        public async Task Commit(TId streamId, long versionBefore, params object[] payloads)
         {
             using (await _writeLock.Aquire())
             {
@@ -40,19 +40,15 @@ namespace RdbmsEventStore.EntityFramework
                     .Select(e => e.Version)
                     .DefaultIfEmpty(0L)
                     .MaxAsync();
-                var events = payloads
-                    .Zip(VersionsFollowing(highestVersionNumber, payloads.Length),
-                    (payload, version) => _eventFactory.Create(streamId, version, payload));
+
+                if (highestVersionNumber != versionBefore)
+                {
+                    // TODO: throw conflict exception
+                }
+
+                var events = _eventFactory.Create(streamId, versionBefore, payloads);
                 context.Events.AddRange(events);
                 await context.SaveChangesAsync();
-            }
-        }
-
-        private static IEnumerable<long> VersionsFollowing(long versionNumber, long count)
-        {
-            for (var i = versionNumber + 1; i <= versionNumber + count; i++)
-            {
-                yield return i;
             }
         }
     }
