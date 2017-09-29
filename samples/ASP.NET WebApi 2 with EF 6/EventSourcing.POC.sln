@@ -1,0 +1,49 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26730.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing.PoC.Web", "EventSourcing.PoC.Web\EventSourcing.PoC.Web.csproj", "{57B0A1F6-DB68-45F8-9D47-E393AF894A4C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing.PoC.Persistence", "EventSourcing.PoC.Persistence\EventSourcing.PoC.Persistence.csproj", "{296291FA-084D-4085-B670-86231ADC4F9E}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing.PoC.Application", "EventSourcing.PoC.Application\EventSourcing.PoC.Application.csproj", "{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore", "..\..\RdbmsEventStore\RdbmsEventStore.csproj", "{396C72CC-61F7-417A-BE19-16216934BB1A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdbmsEventStore.EntityFramework", "..\..\RdbmsEventStore.EntityFramework\RdbmsEventStore.EntityFramework.csproj", "{2FBE029C-A33A-4FCA-A844-0C53F46A405C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{57B0A1F6-DB68-45F8-9D47-E393AF894A4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57B0A1F6-DB68-45F8-9D47-E393AF894A4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57B0A1F6-DB68-45F8-9D47-E393AF894A4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57B0A1F6-DB68-45F8-9D47-E393AF894A4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{296291FA-084D-4085-B670-86231ADC4F9E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{296291FA-084D-4085-B670-86231ADC4F9E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{296291FA-084D-4085-B670-86231ADC4F9E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{296291FA-084D-4085-B670-86231ADC4F9E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{396C72CC-61F7-417A-BE19-16216934BB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{396C72CC-61F7-417A-BE19-16216934BB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{396C72CC-61F7-417A-BE19-16216934BB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{396C72CC-61F7-417A-BE19-16216934BB1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FBE029C-A33A-4FCA-A844-0C53F46A405C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FBE029C-A33A-4FCA-A844-0C53F46A405C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FBE029C-A33A-4FCA-A844-0C53F46A405C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FBE029C-A33A-4FCA-A844-0C53F46A405C}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {DE1E8DC4-E581-4130-A78F-FED490707EAC}
+	EndGlobalSection
+EndGlobal
