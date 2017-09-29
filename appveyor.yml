@@ -1,0 +1,11 @@
+version: 0.1.{build}
+image: Visual Studio 2017
+init:
+  - cmd: git config --global core.autocrlf true
+before_build:
+  - cmd: dotnet --version
+  - cmd: dotnet restore ./src/src.csproj --verbosity m
+build_script:
+  - cmd: dotnet publish -o dist
+clone_depth: 1
+deploy: off
