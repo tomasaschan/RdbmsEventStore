@@ -4,8 +4,8 @@ init:
   - cmd: git config --global core.autocrlf true
 before_build:
   - cmd: dotnet --version
-  - cmd: dotnet restore ./src/src.csproj --verbosity m
+  - cmd: dotnet restore . --verbosity m
 build_script:
-  - cmd: dotnet publish -o dist
+  - cmd: dotnet build
 clone_depth: 1
 deploy: off
