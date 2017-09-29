@@ -8,6 +8,12 @@ namespace RdbmsEventStore
     /// </summary>
     public abstract class EventFactoryBase
     {
+        protected readonly IEventRegistry _registry;
         protected static readonly JsonSerializer serializer = new JsonSerializer { Formatting = Formatting.None };
+
+        protected EventFactoryBase(IEventRegistry registry)
+        {
+            _registry = registry;
+        }
     }
 }

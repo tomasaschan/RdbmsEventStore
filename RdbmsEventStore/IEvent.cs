@@ -16,6 +16,7 @@ namespace RdbmsEventStore
 
         byte[] Payload { get; }
     }
+
     public interface IMutableEvent<TId> : IEvent<TId>
     {
         new DateTimeOffset Timestamp { get; set; }
