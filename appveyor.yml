@@ -4,9 +4,11 @@ init:
   - git config --global core.autocrlf true
 dotnet_csproj:
   patch: true
-  file: 'src\**\*.csproj'
+  file: '**\*.csproj'
   version: '{version}'
   package_version: '{version}'
+install:
+  - ps: Update-AppveyorBuild -Version "$(git describe | % { $_.TrimStart('v') })+$env:APPVEYOR_BUILD_NUMBER"
 before_build:
   - dotnet --version
   - dotnet restore src --verbosity m
