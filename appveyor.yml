@@ -21,7 +21,6 @@ artifacts:
   - path: src/**/*.nupkg
     name: Nuget Packages
     type: NuGetPackage
-clone_depth: 1
 deploy:
   - provider: GitHub
     artifact: /.*\.nupkg/
