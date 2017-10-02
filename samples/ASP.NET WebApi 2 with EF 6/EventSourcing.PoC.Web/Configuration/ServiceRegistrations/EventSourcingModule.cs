@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
-using Autofac.Integration.WebApi;
 using EventSourcing.PoC.Application.Events;
 using EventSourcing.PoC.Application.Messaging;
 using EventSourcing.PoC.Persistence;
@@ -16,8 +15,6 @@ namespace EventSourcing.PoC.Web.Configuration.ServiceRegistrations
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterApiControllers(typeof(Startup).Assembly);
-
             builder.RegisterAssemblyTypes(typeof(IEventStore<,>).GetTypeInfo().Assembly).AsImplementedInterfaces().SingleInstance();
 
             builder.RegisterInstance(new TranslatingEventRegistry(

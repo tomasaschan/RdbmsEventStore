@@ -9,10 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing.PoC.Persisten
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventSourcing.PoC.Application", "EventSourcing.PoC.Application\EventSourcing.PoC.Application.csproj", "{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore", "..\..\RdbmsEventStore\RdbmsEventStore.csproj", "{396C72CC-61F7-417A-BE19-16216934BB1A}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdbmsEventStore.EntityFramework", "..\..\RdbmsEventStore.EntityFramework\RdbmsEventStore.EntityFramework.csproj", "{2FBE029C-A33A-4FCA-A844-0C53F46A405C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,14 +27,6 @@ Global
 		{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{396C72CC-61F7-417A-BE19-16216934BB1A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{396C72CC-61F7-417A-BE19-16216934BB1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{396C72CC-61F7-417A-BE19-16216934BB1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{396C72CC-61F7-417A-BE19-16216934BB1A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2FBE029C-A33A-4FCA-A844-0C53F46A405C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2FBE029C-A33A-4FCA-A844-0C53F46A405C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2FBE029C-A33A-4FCA-A844-0C53F46A405C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2FBE029C-A33A-4FCA-A844-0C53F46A405C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

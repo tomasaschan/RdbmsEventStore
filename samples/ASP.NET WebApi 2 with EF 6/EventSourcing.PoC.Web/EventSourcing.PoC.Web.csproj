@@ -100,6 +100,12 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
+    <Reference Include="RdbmsEventStore, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RdbmsEventStore.0.1.0-beta0001.68\lib\net461\RdbmsEventStore.dll</HintPath>
+    </Reference>
+    <Reference Include="RdbmsEventStore.EntityFramework, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RdbmsEventStore.EntityFramework.0.1.0-beta0001.67\lib\net461\RdbmsEventStore.EntityFramework.dll</HintPath>
+    </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.4.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>
     </Reference>
@@ -113,6 +119,10 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
     <Reference Include="System.Numerics" />
+    <Reference Include="System.ValueTuple">
+      <HintPath>..\packages\System.ValueTuple.4.4.0\lib\net461\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -175,14 +185,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\RdbmsEventStore.EntityFramework\RdbmsEventStore.EntityFramework.csproj">
-      <Project>{2fbe029c-a33a-4fca-a844-0c53f46a405c}</Project>
-      <Name>RdbmsEventStore.EntityFramework</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\RdbmsEventStore\RdbmsEventStore.csproj">
-      <Project>{396c72cc-61f7-417a-be19-16216934bb1a}</Project>
-      <Name>RdbmsEventStore</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EventSourcing.PoC.Application\EventSourcing.PoC.Application.csproj">
       <Project>{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}</Project>
       <Name>EventSourcing.PoC.Application</Name>
