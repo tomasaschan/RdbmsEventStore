@@ -52,8 +52,7 @@ deploy_script:
           return;
       }
 
-      mkdir -p dist
-      $artifacts.keys | % { $artifacts[$_]['sourcePath'] } | % { Copy-Item $_ dist }
-      ls dist
-      dotnet nuget push dist\*.nupkg --api-key $env:NUGET_API_KEY --symbol-api-key $env:NUGET_API_KEY --source https://nuget.org/api/v2/package --symbols-source https://nuget.smbsrc.net/
+      $packages = $artifacts.keys | % { $artifacts[$_]['sourcePath'] }
+      $packages | ? { $_ -notlike '*.symbols.nupkg' } | % { dotnet nuget push $_ -k $env:NUGET_API_KEY -sk $env:NUGET_API_KEY -s https://nuget.org/api/v2/package -ss https://nuget.smbsrc.net/ }
+      $packages | ? { $_ -like '*.symbols.nupkg' } | % { dotnet nuget push $_ -k $env:NUGET_API_KEY -sk $env:NUGET_API_KEY -s https://nuget.smbsrc.net/ -ss https://nuget.smbsrc.net/ }
       if ($LastExitCode -ne 0) { throw; }
