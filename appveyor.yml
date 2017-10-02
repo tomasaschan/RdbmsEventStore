@@ -54,5 +54,4 @@ deploy_script:
 
       $packages = $artifacts.keys | % { $artifacts[$_]['sourcePath'] }
       $packages | ? { $_ -notlike '*.symbols.nupkg' } | % { dotnet nuget push $_ -k $env:NUGET_API_KEY -sk $env:NUGET_API_KEY -s https://nuget.org/api/v2/package -ss https://nuget.smbsrc.net/ }
-      $packages | ? { $_ -like '*.symbols.nupkg' } | % { dotnet nuget push $_ -k $env:NUGET_API_KEY -sk $env:NUGET_API_KEY -s https://nuget.smbsrc.net/ -ss https://nuget.smbsrc.net/ }
       if ($LastExitCode -ne 0) { throw; }
