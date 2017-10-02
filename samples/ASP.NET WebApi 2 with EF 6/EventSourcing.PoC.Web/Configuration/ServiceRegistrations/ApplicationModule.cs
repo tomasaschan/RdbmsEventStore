@@ -1,4 +1,5 @@
 ﻿using Autofac;
+using Autofac.Integration.WebApi;
 using EventSourcing.PoC.Application.Messaging;
 
 namespace EventSourcing.PoC.Web.Configuration.ServiceRegistrations
@@ -7,6 +8,8 @@ namespace EventSourcing.PoC.Web.Configuration.ServiceRegistrations
     {
         protected override void Load(ContainerBuilder builder)
         {
+            builder.RegisterApiControllers(typeof(Startup).Assembly);
+
             builder.RegisterModule<EventSourcingModule>();
             builder.RegisterModule(new MediatRModule(typeof(PostMessageCommand)));
         }
