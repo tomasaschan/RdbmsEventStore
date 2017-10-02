@@ -3,6 +3,18 @@
   <PropertyGroup>
     <TargetFrameworks>net461;netstandard2.0</TargetFrameworks>
     <LangVersion>latest</LangVersion>
+    <Version>0.0.0</Version>
+    <PackageVersion>0.0.0</PackageVersion>
+
+    <Title>RDBMS Event Store</Title>
+    <Description>An Event Store that sits on top of your existing relational database</Description>
+    <Authors>Tomas Lycken (@tlycken)</Authors>
+    <Copyright>2017 Tomas Lycken</Copyright>
+    <PackageProjectUrl>https://github.com/tlycken/RdbmsEventStore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tlycken/RdbmsEventStore</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/tlycken/RdbmsEventStore/blob/master/LICENSE.md</PackageLicenseUrl>
+    <IncludeSymbols>True</IncludeSymbols>
+    <IncludeSource>True</IncludeSource>
   </PropertyGroup>
 
   <ItemGroup>
