@@ -45,31 +45,15 @@ deploy:
       secure: +hGjnoxWXiKJf2SOZhYHq2NgoU9h7dUSGEe40GtjdinfD82rOvnGmsC/PSdc4AwA
     on:
       appveyor_repo_tag: true
-#  - provider: NuGet
-#    api_key:
-#      secure: eEi8gt5ne+a+N5fYINa2DqF7DCqOzYCE5udL5XzZm2qhcaMJkg9Tg4d0QObF9s3L
-#    skip_symbols: false
-#    artifact: /src\/.*\.nupkg/
-#    on:
-#      appveyor_repo_tag: true
 deploy_script:
-  - appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
   - ps: |
-      nuget help
-
       if ((gitversion /showvariable prereleaselabel) -eq "feat") {
           Write-Host "Version is $(gitversion /showvariable FullSemVer); not pushing to NuGet."
           return;
       }
 
-      $sources = $artifacts.keys | % { $artifacts[$_]['sourcePath'] }
-      Write-Host "Found $($sources.Count) artifact sources. They are:"
-      Write-Host $sources
-  
-      $nugets = $sources | ? { ($_ -like '*.nupkg') -and -not ($_ -like '*.symbols.nupkg') }
-      Write-Host "Uploading $($nugets.Count) nuget packages"
-      $nugets | % { nuget.exe push $_ -Source https://www.nuget.org/api/v2/package -ApiKey $env:NUGET_API_KEY; if ($LastExitCode -ne 0) { throw; } }
-
-#      $symbols = $sources | ? { $_ -like '*.symbols.nupkg' }
-#      Write-Host "Uploading $($symbols.Count) symbols packages"
-#      $symbols | % { nuget.exe push $_ -Source https://www.nuget.org/api/v2/package -ApiKey $env:NUGET_API_KEY; if ($LastExitCode -ne 0) { throw; } }
+      mkdir -p dist
+      $artifacts.keys | % { $artifacts[$_]['sourcePath'] } | % { Copy-Item $_ dist }
+      ls dist
+      dotnet nuget push dist/*.nupkg --api-key $env:NUGET_API_KEY --symbol-api-key $env:NUGET_API_KEY
+      if ($LastExitCode -ne 0) { throw; }
