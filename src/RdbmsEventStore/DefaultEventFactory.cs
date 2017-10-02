@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
-using System.Text;
 
 namespace RdbmsEventStore
 {
-    public class EventFactory<TId, TEvent> : EventFactoryBase, IEventFactory<TId, TEvent>
+    public class DefaultEventFactory<TId, TEvent> : IEventFactory<TId, TEvent>
         where TEvent : IMutableEvent<TId>, new()
     {
-        public EventFactory(IEventRegistry registry) : base(registry)
+        private readonly IEventRegistry _registry;
+        private readonly IEventSerializer _serializer;
+
+        public DefaultEventFactory(IEventRegistry registry, IEventSerializer serializer)
         {
+            _registry = registry;
+            _serializer = serializer;
         }
 
         public virtual IEnumerable<TEvent> Create(TId streamId, long version, params object[] payloads)
@@ -17,17 +20,15 @@ namespace RdbmsEventStore
             return new EventCollection<TId, TEvent>(streamId, version, CreateSingle, payloads);
         }
 
-        private TEvent CreateSingle(TId streamId, long version, object payload)
+        protected virtual TEvent CreateSingle(TId streamId, long version, object payload)
         {
-            var writer = new StringWriter();
-            serializer.Serialize(writer, payload);
             return new TEvent
             {
                 StreamId = streamId,
                 Timestamp = DateTimeOffset.UtcNow,
                 Version = version,
                 Type = _registry.NameFor(payload.GetType()),
-                Payload = Encoding.UTF8.GetBytes(writer.ToString())
+                Payload = _serializer.Serialize(payload)
             };
         }
     }
