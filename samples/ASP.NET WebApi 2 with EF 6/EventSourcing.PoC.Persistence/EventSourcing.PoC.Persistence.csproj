@@ -58,10 +58,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\RdbmsEventStore.EntityFramework\RdbmsEventStore.EntityFramework.csproj">
-      <Project>{2fbe029c-a33a-4fca-a844-0c53f46a405c}</Project>
-      <Name>RdbmsEventStore.EntityFramework</Name>
-    </ProjectReference>
     <ProjectReference Include="..\EventSourcing.PoC.Application\EventSourcing.PoC.Application.csproj">
       <Project>{2431A8C2-BC19-44B4-8CB3-8C10533BDEFA}</Project>
       <Name>EventSourcing.PoC.Application</Name>
