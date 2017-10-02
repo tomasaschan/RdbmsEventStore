@@ -69,6 +69,6 @@ deploy_script:
       Write-Host "Uploading $($nugets.Count) nuget packages"
       $nugets | % { nuget.exe push $_ -Source https://www.nuget.org/api/v2/package -ApiKey $env:NUGET_API_KEY; if ($LastExitCode -ne 0) { throw; } }
 
-      $symbols = $sources | ? { $_ -like '*.symbols.nupkg' }
-      Write-Host "Uploading $($symbols.Count) symbols packages"
-      $symbols | % { nuget.exe push $_ -Source https://www.nuget.org/api/v2/package -ApiKey $env:NUGET_API_KEY; if ($LastExitCode -ne 0) { throw; } }
+#      $symbols = $sources | ? { $_ -like '*.symbols.nupkg' }
+#      Write-Host "Uploading $($symbols.Count) symbols packages"
+#      $symbols | % { nuget.exe push $_ -Source https://www.nuget.org/api/v2/package -ApiKey $env:NUGET_API_KEY; if ($LastExitCode -ne 0) { throw; } }
