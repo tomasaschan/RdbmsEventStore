@@ -55,5 +55,5 @@ deploy_script:
       mkdir -p dist
       $artifacts.keys | % { $artifacts[$_]['sourcePath'] } | % { Copy-Item $_ dist }
       ls dist
-      dotnet nuget push dist\*.nupkg --api-key $env:NUGET_API_KEY --symbol-api-key $env:NUGET_API_KEY --source https://nuget.org/api/v2/package
+      dotnet nuget push dist\*.nupkg --api-key $env:NUGET_API_KEY --symbol-api-key $env:NUGET_API_KEY --source https://nuget.org/api/v2/package --symbols-source https://nuget.smbsrc.net/
       if ($LastExitCode -ne 0) { throw; }
