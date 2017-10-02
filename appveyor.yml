@@ -51,7 +51,8 @@ deploy_script:
           Write-Host "Version is $(gitversion /showvariable FullSemVer); not pushing to NuGet."
           return;
       }
-
-      $packages = $artifacts.keys | % { $artifacts[$_]['sourcePath'] }
-      $packages | ? { $_ -notlike '*.symbols.nupkg' } | % { dotnet nuget push $_ -k $env:NUGET_API_KEY -sk $env:NUGET_API_KEY -s https://nuget.org/api/v2/package -ss https://nuget.smbsrc.net/ }
+      mkdir dist
+      $artifacts.keys | % { $artifacts[$_]['sourcePath'] } | Copy-Item -Destination dist
+      $packages = ls dist | select -ExpandProperty FullName | ? { $_ -notlike '*.symbols.nupkg' }
+      $packages | % { dotnet nuget push $_ -k $env:NUGET_API_KEY -sk $env:NUGET_API_KEY -s https://nuget.org/api/v2/package -ss https://nuget.smbsrc.net/ }
       if ($LastExitCode -ne 0) { throw; }
