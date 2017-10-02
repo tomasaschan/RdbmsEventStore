@@ -5,11 +5,13 @@ VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore", "RdbmsEventStore\RdbmsEventStore.csproj", "{4EBC13FC-FB6E-4B51-9EFD-A867434E8953}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdbmsEventStore.EntityFramework", "RdbmsEventStore.EntityFramework\RdbmsEventStore.EntityFramework.csproj", "{2FBE029C-A33A-4FCA-A844-0C53F46A405C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore.EntityFramework", "RdbmsEventStore.EntityFramework\RdbmsEventStore.EntityFramework.csproj", "{2FBE029C-A33A-4FCA-A844-0C53F46A405C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{1D6CB71B-8A69-4C9D-A59C-0BD9F4AD0C7B}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
+		..\appveyor.yml = ..\appveyor.yml
+		..\GitVersion.yml = ..\GitVersion.yml
 		LICENSE.md = LICENSE.md
 		README.md = README.md
 	EndProjectSection

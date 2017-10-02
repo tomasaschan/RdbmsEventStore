@@ -1,6 +1,18 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <TargetFramework>net461</TargetFramework>
+    <Version>0.0.0</Version>
+    <PackageVersion>0.0.0</PackageVersion>
+
+    <Title>RDBMS Event Store - Entity Framework</Title>
+    <Description>Entity Framework 6.x bindings for RdbmsEventStore</Description>
+    <Authors>Tomas Lycken (@tlycken)</Authors>
+    <Copyright>2017 Tomas Lycken</Copyright>
+    <PackageProjectUrl>https://github.com/tlycken/RdbmsEventStore</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tlycken/RdbmsEventStore</RepositoryUrl>
+    <PackageLicenseUrl>https://github.com/tlycken/RdbmsEventStore/blob/master/LICENSE.md</PackageLicenseUrl>
+    <IncludeSymbols>True</IncludeSymbols>
+    <IncludeSource>True</IncludeSource>
   </PropertyGroup>
 
   <ItemGroup>

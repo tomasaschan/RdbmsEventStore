@@ -1,0 +1,11 @@
+mode: ContinuousDelivery
+next-version: 0.1.0
+branches:
+  master:
+    tag: beta
+  (pull|pull\-requests|pr)[/-]:
+    tag: alpha
+  (?!(^master|^pull|^pr|^release|^hotfix|^support|^dev)):
+    tag: feat
+ignore:
+  sha: []
