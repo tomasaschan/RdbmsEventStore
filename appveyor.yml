@@ -20,7 +20,7 @@ install:
       if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  }
 
       $buildVersion = "$($gitVersion.FullSemVer).build.$buildNumber"
-      $packageVersion = "$($gitVersion.NuGetVersion).$buildNumber"
+      $packageVersion = if (($gitVersion.FullSemVer -like '*-*')) { "$($gitVersion.NuGetVersion).$buildNumber" } else { $gitVersion.FullSemVer }
 
       Write-Host "Build number: $buildNumber"
       Write-Host "Git version: $($gitVersion.InformationalVersion)"
