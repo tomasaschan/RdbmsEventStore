@@ -55,7 +55,8 @@ deploy:
 deploy_script:
   - appveyor DownloadFile https://dist.nuget.org/win-x86-commandline/latest/nuget.exe
   - ps: |
-      
+      nuget help
+
       if ((gitversion /showvariable prereleaselabel) -eq "feat") {
           Write-Host "Version is $(gitversion /showvariable FullSemVer); not pushing to NuGet."
           return;
