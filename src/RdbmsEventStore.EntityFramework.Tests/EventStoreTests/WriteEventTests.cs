@@ -60,8 +60,8 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
 
             var events = await _dbContext.Events.OrderBy(e => e.Timestamp).ToListAsync();
             Assert.Collection(events,
-                foo => Assert.Equal(0, foo.Version),
-                bar => Assert.Equal(1, bar.Version));
+                foo => Assert.Equal(1, foo.Version),
+                bar => Assert.Equal(2, bar.Version));
         }
     }
 }
