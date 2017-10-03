@@ -23,10 +23,8 @@ before_build:
 build_script:
   - dotnet build src --configuration Release
   - dotnet pack src --configuration Release --no-build
-test:
-  assemblies:
-    only:
-      - '**\*.Tests.dll'
+test_script:
+  - ps: ./run-tests.ps1
 artifacts:
   - path: src/**/*.nupkg
 deploy:
