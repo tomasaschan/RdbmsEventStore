@@ -47,8 +47,8 @@ namespace RdbmsEventStore.Tests
         public void EventCollectionCorrectlyVersionsEvents()
         {
             Assert.Collection(_collection.Select(e => e.Version),
-                v => Assert.Equal(0, v),
-                v => Assert.Equal(1, v));
+                v => Assert.Equal(1, v),
+                v => Assert.Equal(2, v));
         }
     }
 }
