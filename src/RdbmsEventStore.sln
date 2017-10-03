@@ -23,6 +23,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B3BDC65F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore.Tests", "RdbmsEventStore.Tests\RdbmsEventStore.Tests.csproj", "{E58D4AE3-79B6-4B36-9693-9D852222D06E}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore.EntityFramework.Tests", "RdbmsEventStore.EntityFramework.Tests\RdbmsEventStore.EntityFramework.Tests.csproj", "{0096C881-9347-454E-B0A0-73C7CABDBF37}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,12 +43,17 @@ Global
 		{E58D4AE3-79B6-4B36-9693-9D852222D06E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E58D4AE3-79B6-4B36-9693-9D852222D06E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E58D4AE3-79B6-4B36-9693-9D852222D06E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0096C881-9347-454E-B0A0-73C7CABDBF37}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0096C881-9347-454E-B0A0-73C7CABDBF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0096C881-9347-454E-B0A0-73C7CABDBF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0096C881-9347-454E-B0A0-73C7CABDBF37}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{E58D4AE3-79B6-4B36-9693-9D852222D06E} = {B3BDC65F-EA8A-4CDC-85FC-0AA1C48C95A8}
+		{0096C881-9347-454E-B0A0-73C7CABDBF37} = {B3BDC65F-EA8A-4CDC-85FC-0AA1C48C95A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CA4860B3-3208-41C0-8FB9-719E00FBAD0D}

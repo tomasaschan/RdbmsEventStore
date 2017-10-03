@@ -7,6 +7,7 @@ namespace RdbmsEventStore.EntityFramework
     public class Event<TId> : IEvent<TId>, IMutableEvent<TId>
     {
         [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public TId EventId { get; set; }
 
         [Required]
