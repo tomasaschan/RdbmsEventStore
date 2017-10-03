@@ -43,7 +43,7 @@ namespace RdbmsEventStore.EntityFramework
 
                 if (highestVersionNumber != versionBefore)
                 {
-                    // TODO: throw conflict exception
+                    throw new ConflictException(streamId, versionBefore, highestVersionNumber, payloads);
                 }
 
                 var events = _eventFactory.Create(streamId, versionBefore, payloads);

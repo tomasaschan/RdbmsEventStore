@@ -24,6 +24,17 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         }
 
         [Fact]
+        public async Task CommittingWithOutOfSyncDataThrowsConflictException()
+        {
+            var store = _fixture.BuildEventStore(_dbContext);
+            var stream = Guid.NewGuid();
+            _dbContext.Events.AddRange(_fixture.EventFactory.Create(stream, 0, new FooEvent { Foo = "Bar" }));
+            await _dbContext.SaveChangesAsync();
+
+            await Assert.ThrowsAsync<ConflictException>(() => store.Commit(stream, 0, new FooEvent { Foo = "Qux" }));
+        }
+
+        [Fact]
         public async Task CommittingMultipleEventsStoresAllEventsInContext()
         {
             Assert.Empty(await _dbContext.Events.ToListAsync());
