@@ -9,9 +9,9 @@ namespace RdbmsEventStore
     {
         private readonly IEnumerable<TEvent> _events;
 
-        public EventCollection(TId streamId, long currentVersion, Func<TId, long, object, TEvent> factory, params object[] events)
+        public EventCollection(TId streamId, long currentVersion, Func<TId, long, object, TEvent> factory, params object[] payloads)
         {
-            _events = events.Select((payload, i) => factory(streamId, currentVersion + i, payload));
+            _events = payloads.Select((payload, i) => factory(streamId, currentVersion + i, payload));
         }
 
         public IEnumerator<TEvent> GetEnumerator() => _events.GetEnumerator();
