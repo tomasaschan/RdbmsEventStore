@@ -5,3 +5,5 @@ test_results
 
 .vs
 .vscode
+
+*.user
