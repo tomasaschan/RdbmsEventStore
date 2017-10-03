@@ -4,14 +4,27 @@ using System.Linq;
 
 namespace RdbmsEventStore.EventRegistry
 {
-    public class SimpleEventRegistry : IEventRegistry
+    public class SimpleEventRegistry : IComposableEventRegistry
     {
         private readonly IReadOnlyDictionary<Type, string> _typeToString;
-        public SimpleEventRegistry(IReadOnlyDictionary<string, Type> eventTypes)
+        public SimpleEventRegistry(IEnumerable<Type> eventTypes, Func<Type, string> namer)
+            : this(eventTypes.Select(type => new KeyValuePair<string, Type>(namer(type), type)))
         {
-            Registrations = eventTypes;
-            _typeToString = eventTypes
-                .ToDictionary(kvp => kvp.Value, kvp => kvp.Key);
+        }
+
+        public SimpleEventRegistry(IEnumerable<KeyValuePair<string, Type>> registrations)
+        {
+            try
+            {
+                Registrations = registrations
+                    .ToDictionary(registration => registration.Key, registration => registration.Value);
+                _typeToString = Registrations
+                    .ToDictionary(registration => registration.Value, kvp => kvp.Key);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new EventTypeRegistrationException("Invalid event type registration; two or more types are either named the same, or registered twice", ex);
+            }
         }
 
         public Type TypeFor(string eventType)
@@ -20,7 +33,7 @@ namespace RdbmsEventStore.EventRegistry
                 : throw new EventTypeNotFoundException(eventType, Registrations);
 
         public string NameFor(Type eventType)
-            =>_typeToString.TryGetValue(eventType, out var name)
+            => _typeToString.TryGetValue(eventType, out var name)
             ? name
             : throw new EventNameNotFoundException(eventType, _typeToString);
 
