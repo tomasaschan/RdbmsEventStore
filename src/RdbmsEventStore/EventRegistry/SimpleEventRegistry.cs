@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace RdbmsEventStore.EventRegistry
 {
-    public class SimpleEventRegistry : IEventRegistry
+    public class SimpleEventRegistry : IComposableEventRegistry
     {
         private readonly IReadOnlyDictionary<Type, string> _typeToString;
         public SimpleEventRegistry(IEnumerable<Type> eventTypes, Func<Type, string> namer)
