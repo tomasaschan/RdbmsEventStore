@@ -33,7 +33,7 @@ namespace RdbmsEventStore.EventRegistry
                 : throw new EventTypeNotFoundException(eventType, Registrations);
 
         public string NameFor(Type eventType)
-            =>_typeToString.TryGetValue(eventType, out var name)
+            => _typeToString.TryGetValue(eventType, out var name)
             ? name
             : throw new EventNameNotFoundException(eventType, _typeToString);
 
