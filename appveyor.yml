@@ -14,19 +14,7 @@ install:
   - choco install gitversion.portable -y -pre
   - git fetch --tags
   - ps: |
-      gitversion | Out-Host
-      $buildNumber = $env:APPVEYOR_BUILD_NUMBER
-      $gitVersion = gitversion | ConvertFrom-JSON
-      if ($LastExitCode -ne 0) { $host.SetShouldExit($LastExitCode)  }
-
-      $buildVersion = "$($gitVersion.FullSemVer).build.$buildNumber"
-      $packageVersion = if (($gitVersion.FullSemVer -like '*-*')) { "$($gitVersion.NuGetVersion).$buildNumber" } else { $gitVersion.FullSemVer }
-
-      Write-Host "Build number: $buildNumber"
-      Write-Host "Git version: $($gitVersion.InformationalVersion)"
-      Write-Host "Build version: $buildVersion"
-      Write-Host "Package version: $packageVersion"
-
+      ./get-version.ps1
       Update-AppveyorBuild -Version $buildVersion
       $env:PACKAGE_VERSION = $packageVersion
 before_build:
@@ -46,13 +34,4 @@ deploy:
     on:
       appveyor_repo_tag: true
 deploy_script:
-  - ps: |
-      if ((gitversion /showvariable prereleaselabel) -eq "feat") {
-          Write-Host "Version is $(gitversion /showvariable FullSemVer); not pushing to NuGet."
-          return;
-      }
-      mkdir dist
-      $artifacts.keys | % { $artifacts[$_]['sourcePath'] } | ? { $_ -notlike '*.symbols.nupkg' } | Copy-Item -Destination dist
-      $packages = ls dist | select -ExpandProperty FullName | ? { $_ -notlike '*.symbols.nupkg' }
-      $packages | % { dotnet nuget push $_ -k $env:NUGET_API_KEY -sk $env:NUGET_API_KEY -s https://nuget.org/api/v2/package -ss https://nuget.smbsrc.net/ }
-      if ($LastExitCode -ne 0) { throw; }
+  - ps: ./deploy-nugets.ps1
