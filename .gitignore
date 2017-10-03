@@ -1,6 +1,7 @@
 bin
 obj
 packages
+test_results
 
 .vs
 .vscode
