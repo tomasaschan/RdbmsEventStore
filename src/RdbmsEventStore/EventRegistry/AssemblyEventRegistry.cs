@@ -26,8 +26,8 @@ namespace RdbmsEventStore.EventRegistry
                 .GetTypeInfo()
                 .Assembly
                 .GetTypes()
-                .Where(inclusionPredicate)
-                .ToDictionary(namer, type => type))
+                .Where(type => !type.Name.StartsWith("<>"))
+                .Where(inclusionPredicate), namer)
         {
         }
     }
