@@ -21,7 +21,8 @@ before_build:
   - dotnet --version
   - dotnet restore src --verbosity m
 build_script:
-  - dotnet pack src -c Release
+  - dotnet build src --configuration Release
+  - dotnet pack src --configuration Release --no-build
 test:
   assemblies:
     only:
