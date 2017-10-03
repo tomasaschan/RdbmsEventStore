@@ -39,7 +39,7 @@ namespace EventSourcing.PoC.Web.Configuration.ServiceRegistrations
                 .InstancePerLifetimeScope();
 
             builder
-                .RegisterType<EventFactory<long, Event>>()
+                .RegisterType<DefaultEventFactory<long, Event>>()
                 .AsImplementedInterfaces()
                 .SingleInstance();
 
