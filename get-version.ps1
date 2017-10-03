@@ -10,3 +10,9 @@ Write-Host "Build number: $buildNumber"
 Write-Host "Git version: $($gitVersion.InformationalVersion)"
 Write-Host "Build version: $buildVersion"
 Write-Host "Package version: $packageVersion"
+
+return @{
+	Build = $buildVersion;
+	Package = $packageVersion;
+	Git = $gitVersion
+}

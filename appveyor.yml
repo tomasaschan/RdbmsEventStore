@@ -14,9 +14,9 @@ install:
   - choco install gitversion.portable -y -pre
   - git fetch --tags
   - ps: |
-      ./get-version.ps1
-      Update-AppveyorBuild -Version $buildVersion
-      $env:PACKAGE_VERSION = $packageVersion
+      $version = ./get-version.ps1
+      Update-AppveyorBuild -Version $version.Build
+      $env:PACKAGE_VERSION = $version.Package
 before_build:
   - dotnet --version
   - dotnet restore src --verbosity m
