@@ -6,32 +6,33 @@ using System.Threading.Tasks;
 
 namespace RdbmsEventStore.EntityFramework
 {
-    public class EntityFrameworkEventStore<TId, TContext, TEvent> : IEventStore<TId, TEvent>
+    public class EntityFrameworkEventStore<TId, TStreamId, TContext, TEvent> : IEventStore<TId, TStreamId, TEvent>
         where TId : IEquatable<TId>
+        where TStreamId : IEquatable<TStreamId>
         where TContext : DbContext, IEventDbContext<TEvent>
-        where TEvent : Event<TId>, IEvent<TId>, new()
+        where TEvent : Event<TId, TStreamId>, IEvent<TId, TStreamId>, new()
     {
         private readonly TContext context;
-        private readonly IEventFactory<TId, TEvent> _eventFactory;
+        private readonly IEventFactory<TId, TStreamId, TEvent> _eventFactory;
         private readonly IWriteLock _writeLock;
 
-        public EntityFrameworkEventStore(TContext context, IEventFactory<TId, TEvent> eventFactory, IWriteLock writeLock)
+        public EntityFrameworkEventStore(TContext context, IEventFactory<TId, TStreamId, TEvent> eventFactory, IWriteLock writeLock)
         {
             this.context = context;
             _eventFactory = eventFactory;
             _writeLock = writeLock;
         }
 
-        public Task<IEnumerable<TEvent>> Events(TId streamId) => Events(streamId, query => query);
+        public Task<IEnumerable<TEvent>> Events(TStreamId streamId) => Events(streamId, query => query);
 
-        public async Task<IEnumerable<TEvent>> Events(TId streamId, Func<IQueryable<TEvent>, IQueryable<TEvent>> query)
+        public async Task<IEnumerable<TEvent>> Events(TStreamId streamId, Func<IQueryable<TEvent>, IQueryable<TEvent>> query)
             => await context.Events
                 .Where(e => e.StreamId.Equals(streamId))
                 .Apply(query)
                 .AsNoTracking()
                 .ToListAsync();
 
-        public async Task Commit(TId streamId, long versionBefore, params object[] payloads)
+        public async Task Commit(TStreamId streamId, long versionBefore, params object[] payloads)
         {
             using (await _writeLock.Aquire())
             {

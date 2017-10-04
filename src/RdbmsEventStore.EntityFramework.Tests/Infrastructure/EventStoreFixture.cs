@@ -10,16 +10,16 @@ namespace RdbmsEventStore.EntityFramework.Tests.Infrastructure
         {
             EventRegistry = new AssemblyEventRegistry(typeof(TestEvent), type => type.Name, type => !type.Name.StartsWith("<>"));
             EventSerializer = new DefaultEventSerializer();
-            EventFactory = new DefaultEventFactory<Guid, TestEvent>(EventRegistry, EventSerializer);
+            EventFactory = new DefaultEventFactory<Guid, Guid, TestEvent>(EventRegistry, EventSerializer);
             WriteLock = new WriteLock();
         }
 
         public IEventRegistry EventRegistry { get; }
         public IEventSerializer EventSerializer { get; }
-        public IEventFactory<Guid, TestEvent> EventFactory { get; }
+        public IEventFactory<Guid, Guid, TestEvent> EventFactory { get; }
         public IWriteLock WriteLock { get; }
 
-        public EntityFrameworkEventStore<Guid, EventStoreContext<TestEvent>, TestEvent> BuildEventStore(EventStoreContext<TestEvent> dbContext)
-            => new EntityFrameworkEventStore<Guid, EventStoreContext<TestEvent>, TestEvent>(dbContext, EventFactory, WriteLock);
+        public EntityFrameworkEventStore<Guid, Guid, EventStoreContext<TestEvent>, TestEvent> BuildEventStore(EventStoreContext<TestEvent> dbContext)
+            => new EntityFrameworkEventStore<Guid, Guid, EventStoreContext<TestEvent>, TestEvent>(dbContext, EventFactory, WriteLock);
     }
 }

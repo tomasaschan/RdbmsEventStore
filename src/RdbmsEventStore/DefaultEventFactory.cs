@@ -3,8 +3,8 @@ using System.Collections.Generic;
 
 namespace RdbmsEventStore
 {
-    public class DefaultEventFactory<TId, TEvent> : IEventFactory<TId, TEvent>
-        where TEvent : IMutableEvent<TId>, new()
+    public class DefaultEventFactory<TId, TStreamId, TEvent> : IEventFactory<TId, TStreamId, TEvent>
+        where TEvent : IMutableEvent<TId, TStreamId>, new()
     {
         private readonly IEventRegistry _registry;
         private readonly IEventSerializer _serializer;
@@ -15,12 +15,12 @@ namespace RdbmsEventStore
             _serializer = serializer;
         }
 
-        public virtual IEnumerable<TEvent> Create(TId streamId, long version, params object[] payloads)
+        public virtual IEnumerable<TEvent> Create(TStreamId streamId, long version, params object[] payloads)
         {
-            return new EventCollection<TId, TEvent>(streamId, version, CreateSingle, payloads);
+            return new EventCollection<TId, TStreamId, TEvent>(streamId, version, CreateSingle, payloads);
         }
 
-        protected virtual TEvent CreateSingle(TId streamId, long version, object payload)
+        protected virtual TEvent CreateSingle(TStreamId streamId, long version, object payload)
         {
             return new TEvent
             {

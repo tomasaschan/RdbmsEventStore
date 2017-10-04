@@ -2,8 +2,8 @@
 
 namespace RdbmsEventStore
 {
-    public interface IEventFactory<in TId, out TEvent> where TEvent : IEvent<TId>
+    public interface IEventFactory<in TId, in TStreamId, out TEvent> where TEvent : IEvent<TId, TStreamId>
     {
-        IEnumerable<TEvent> Create(TId streamId, long version, params object[] payloads);
+        IEnumerable<TEvent> Create(TStreamId streamId, long version, params object[] payloads);
     }
 }

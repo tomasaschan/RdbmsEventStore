@@ -2,5 +2,5 @@
 
 namespace RdbmsEventStore.EntityFramework.Tests.TestData
 {
-    public class TestEvent : Event<Guid> { }
+    public class TestEvent : Event<Guid, Guid> { }
 }

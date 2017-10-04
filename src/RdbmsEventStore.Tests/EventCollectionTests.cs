@@ -8,7 +8,7 @@ namespace RdbmsEventStore.Tests
 {
     public class EventCollectionTests
     {
-        private class TestEvent : IEvent<Guid>
+        private class TestEvent : IEvent<Guid, Guid>
         {
             public DateTimeOffset Timestamp { get; set; }
             public Guid EventId { get; set; }
@@ -29,12 +29,12 @@ namespace RdbmsEventStore.Tests
                 Payload = Encoding.UTF8.GetBytes(JsonConvert.SerializeObject(payload))
             };
 
-        private readonly EventCollection<Guid, TestEvent> _collection;
+        private readonly EventCollection<Guid, Guid, TestEvent> _collection;
 
         public EventCollectionTests()
         {
             var streamId = Guid.NewGuid();
-            _collection = new EventCollection<Guid, TestEvent>(streamId, 0, Factory, new { Foo = "Foo" }, new { Bar = "Bar" });
+            _collection = new EventCollection<Guid, Guid, TestEvent>(streamId, 0, Factory, new { Foo = "Foo" }, new { Bar = "Bar" });
         }
 
         [Fact]
