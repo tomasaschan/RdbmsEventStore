@@ -2,13 +2,13 @@
 
 namespace RdbmsEventStore
 {
-    public interface IEvent<out TId>
+    public interface IEvent<out TId, out TStreamId>
     {
         DateTimeOffset Timestamp { get; }
 
         TId EventId { get; }
 
-        TId StreamId { get; }
+        TStreamId StreamId { get; }
 
         long Version { get; }
 
@@ -17,13 +17,13 @@ namespace RdbmsEventStore
         byte[] Payload { get; }
     }
 
-    public interface IMutableEvent<TId> : IEvent<TId>
+    public interface IMutableEvent<TId, TStreamId> : IEvent<TId, TStreamId>
     {
         new DateTimeOffset Timestamp { get; set; }
 
         new TId EventId { get; set; }
 
-        new TId StreamId { get; set; }
+        new TStreamId StreamId { get; set; }
 
         new long Version { get; set; }
 

@@ -1,25 +1,27 @@
 ﻿using System;
-using RdbmsEventStore.EntityFramework.Tests.TestData;
 using RdbmsEventStore.EventRegistry;
 
 namespace RdbmsEventStore.EntityFramework.Tests.Infrastructure
 {
-    public class EventStoreFixture
+    public class EventStoreFixture<TId, TStreamId, TEvent>
+        where TId : IEquatable<TId>
+        where TStreamId : IEquatable<TStreamId>
+        where TEvent : Event<TId, TStreamId>, new()
     {
         public EventStoreFixture()
         {
-            EventRegistry = new AssemblyEventRegistry(typeof(TestEvent), type => type.Name, type => !type.Name.StartsWith("<>"));
+            EventRegistry = new AssemblyEventRegistry(typeof(TEvent), type => type.Name, type => !type.Name.StartsWith("<>"));
             EventSerializer = new DefaultEventSerializer();
-            EventFactory = new DefaultEventFactory<Guid, TestEvent>(EventRegistry, EventSerializer);
+            EventFactory = new DefaultEventFactory<TId, TStreamId, TEvent>(EventRegistry, EventSerializer);
             WriteLock = new WriteLock();
         }
 
         public IEventRegistry EventRegistry { get; }
         public IEventSerializer EventSerializer { get; }
-        public IEventFactory<Guid, TestEvent> EventFactory { get; }
+        public DefaultEventFactory<TId, TStreamId, TEvent> EventFactory { get; }
         public IWriteLock WriteLock { get; }
 
-        public EntityFrameworkEventStore<Guid, EventStoreContext<TestEvent>, TestEvent> BuildEventStore(EventStoreContext<TestEvent> dbContext)
-            => new EntityFrameworkEventStore<Guid, EventStoreContext<TestEvent>, TestEvent>(dbContext, EventFactory, WriteLock);
+        public EntityFrameworkEventStore<TId, TStreamId, EventStoreContext<TEvent>, TEvent> BuildEventStore(EventStoreContext<TEvent> dbContext)
+            => new EntityFrameworkEventStore<TId, TStreamId, EventStoreContext<TEvent>, TEvent>(dbContext, EventFactory, WriteLock);
     }
 }

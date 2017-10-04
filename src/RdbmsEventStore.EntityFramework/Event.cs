@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace RdbmsEventStore.EntityFramework
 {
-    public class Event<TId> : IEvent<TId>, IMutableEvent<TId>
+    public class Event<TId, TStreamId> : IEvent<TId, TStreamId>, IMutableEvent<TId, TStreamId>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -15,7 +15,7 @@ namespace RdbmsEventStore.EntityFramework
 
         [Index(Order = 1)]
         [Required]
-        public TId StreamId { get; set; }
+        public TStreamId StreamId { get; set; }
 
         [Required]
         [Index(Order = 2)]

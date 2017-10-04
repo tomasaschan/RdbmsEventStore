@@ -16,7 +16,7 @@ namespace RdbmsEventStore
             _serializer = serializer;
         }
 
-        public TState Unfold<TState, TId>(TState initialState, IEnumerable<IEvent<TId>> events, Func<TState, object, TState> applicator)
+        public TState Unfold<TState, TId, TStreamId>(TState initialState, IEnumerable<IEvent<TId, TStreamId>> events, Func<TState, object, TState> applicator)
             => events
                 .Select(@event =>
                 {

@@ -5,6 +5,6 @@ namespace RdbmsEventStore
 {
     public interface IMaterializer
     {
-        TState Unfold<TState, TId>(TState initialState, IEnumerable<IEvent<TId>> events, Func<TState, object, TState> applicator);
+        TState Unfold<TState, TId, TStreamId>(TState initialState, IEnumerable<IEvent<TId, TStreamId>> events, Func<TState, object, TState> applicator);
     }
 }
