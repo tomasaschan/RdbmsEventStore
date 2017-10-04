@@ -9,9 +9,9 @@ using Xunit;
 
 namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
 {
-    public class WriteEventTests : EventStoreTestBase
+    public class WriteEventTests : EventStoreTestBase<Guid, Guid, GuidGuidEvent>
     {
-        public WriteEventTests(EventStoreFixture fixture, AssemblyInitializerFixture initializer) : base(fixture, initializer)
+        public WriteEventTests(EventStoreFixture<Guid, Guid, GuidGuidEvent> fixture, AssemblyInitializerFixture initializer) : base(fixture, initializer)
         {
         }
 
