@@ -44,7 +44,7 @@ namespace RdbmsEventStore.EventRegistry
                 : eventType;
 
         private string InverseTranslationFor(string eventType)
-            => _inverseTranslations.TryGetValue(eventType, out var translated)
+            => _translateNewEvents && _inverseTranslations.TryGetValue(eventType, out var translated)
                 ? InverseTranslationFor(translated)
                 : eventType;
 
