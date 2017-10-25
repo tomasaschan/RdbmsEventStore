@@ -1,10 +1,11 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using RdbmsEventStore.Serialization;
 
 namespace RdbmsEventStore.EntityFramework
 {
-    public class Event<TId, TStreamId> : IEvent<TId, TStreamId>, IMutableEvent<TId, TStreamId>
+    public class EntityFrameworkEvent<TId, TStreamId> : IPersistedEvent<TStreamId>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

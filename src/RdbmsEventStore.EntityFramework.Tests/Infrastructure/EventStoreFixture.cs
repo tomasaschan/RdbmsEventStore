@@ -1,29 +1,43 @@
 ﻿using System;
 using System.Data.Entity;
+using RdbmsEventStore.EntityFramework.Tests.EventStoreTests;
+using RdbmsEventStore.EntityFramework.Tests.TestData;
 using RdbmsEventStore.EventRegistry;
+using RdbmsEventStore.Serialization;
 
 namespace RdbmsEventStore.EntityFramework.Tests.Infrastructure
 {
-    public class EventStoreFixture<TId, TStreamId, TEvent>
+    public class EventStoreFixture<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent>
         where TId : IEquatable<TId>
         where TStreamId : IEquatable<TStreamId>
-        where TEvent : class, IMutableEvent<TId, TStreamId>, new()
+        where TEvent : class, TEventMetadata, IMutableEvent<TStreamId>, new()
+        where TPersistedEvent : class, TEventMetadata, IPersistedEvent<TStreamId>, new()
+        where TEventMetadata : IEventMetadata<TStreamId>
     {
         public EventStoreFixture()
         {
             EventRegistry = new AssemblyEventRegistry(typeof(TEvent), type => type.Name, type => !type.Name.StartsWith("<>"));
-            EventSerializer = new DefaultEventSerializer();
-            EventFactory = new DefaultEventFactory<TId, TStreamId, TEvent>(EventRegistry, EventSerializer);
+            EventSerializer = new DefaultEventSerializer<TStreamId, TEvent, TPersistedEvent>(EventRegistry);
+            EventFactory = new DefaultEventFactory<TStreamId, TEvent>();
             WriteLock = new WriteLock();
         }
 
-        public IEventRegistry EventRegistry { get; }
-        public IEventSerializer EventSerializer { get; }
-        public DefaultEventFactory<TId, TStreamId, TEvent> EventFactory { get; }
-        public IWriteLock WriteLock { get; }
+        public IEventRegistry EventRegistry { get; protected set; }
+        public IEventSerializer<TEvent, TPersistedEvent> EventSerializer { get; protected set; }
+        public IEventFactory<TStreamId, TEvent> EventFactory { get; protected set; }
+        public IWriteLock WriteLock { get; protected set; }
 
-        public EntityFrameworkEventStore<TId, TStreamId, TEventStoreContext, TEvent> BuildEventStore<TEventStoreContext>(TEventStoreContext dbContext)
-            where TEventStoreContext : DbContext, IEventDbContext<TEvent>
-            => new EntityFrameworkEventStore<TId, TStreamId, TEventStoreContext, TEvent>(dbContext, EventFactory, WriteLock);
+        public EntityFrameworkEventStore<TId, TStreamId, TEventStoreContext, TEvent, TEventMetadata, TPersistedEvent> BuildEventStore<TEventStoreContext>(TEventStoreContext dbContext)
+            where TEventStoreContext : DbContext, IEventDbContext<TPersistedEvent>
+            => new EntityFrameworkEventStore<TId, TStreamId, TEventStoreContext, TEvent, TEventMetadata, TPersistedEvent>(dbContext, EventFactory, WriteLock, EventSerializer);
+    }
+
+    public class ExtraMetaEventFactoryFixture : EventStoreFixture<long, string, ExtraMetaStringEvent, IExtraMeta, ExtraMetaLongStringPersistedEventMetadata>
+    {
+        public ExtraMetaEventFactoryFixture()
+        {
+            EventFactory = new ExtraMetaEventFactory();
+            EventSerializer = new ExtraMetaEventSerializer(EventRegistry);
+        }
     }
 }

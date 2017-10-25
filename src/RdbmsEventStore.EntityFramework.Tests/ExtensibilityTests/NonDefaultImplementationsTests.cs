@@ -7,11 +7,21 @@ using System.Text;
 using System.Threading.Tasks;
 using RdbmsEventStore.EntityFramework.Tests.Infrastructure;
 using RdbmsEventStore.EntityFramework.Tests.TestData;
+using RdbmsEventStore.Serialization;
 using Xunit;
 
 namespace RdbmsEventStore.EntityFramework.Tests.ExtensibilityTests
 {
-    public class NonDefaultEvent : IMutableEvent<long, long>
+    public class NonDefaultEvent : IMutableEvent<long>
+    {
+        public DateTimeOffset Timestamp { get; set; }
+        public long StreamId { get; set; }
+        public long Version { get; set; }
+        public Type Type { get; set; }
+        public object Payload { get; set; }
+    }
+
+    public class NonDefaultPersistedEvent : IPersistedEvent<long>
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
@@ -28,18 +38,18 @@ namespace RdbmsEventStore.EntityFramework.Tests.ExtensibilityTests
         public byte[] Payload { get; set; }
     }
 
-    public class NonDefaultContext : DbContext, IEventDbContext<NonDefaultEvent>
+    public class NonDefaultContext : DbContext, IEventDbContext<NonDefaultPersistedEvent>
     {
-        public DbSet<NonDefaultEvent> Events { get; set; }
+        public DbSet<NonDefaultPersistedEvent> Events { get; set; }
     }
 
     [Collection(nameof(InMemoryDatabaseCollection))]
-    public class NonDefaultImplementationsTests : IClassFixture<EventStoreFixture<long, long, NonDefaultEvent>>, IDisposable
+    public class NonDefaultImplementationsTests : IClassFixture<EventStoreFixture<long, long, NonDefaultEvent, IEventMetadata<long>, NonDefaultPersistedEvent>>, IDisposable
     {
-        private readonly EventStoreFixture<long, long, NonDefaultEvent> _fixture;
+        private readonly EventStoreFixture<long, long, NonDefaultEvent, IEventMetadata<long>, NonDefaultPersistedEvent> _fixture;
         private readonly NonDefaultContext _dbContext;
 
-        public NonDefaultImplementationsTests(EventStoreFixture<long, long, NonDefaultEvent> fixture)
+        public NonDefaultImplementationsTests(EventStoreFixture<long, long, NonDefaultEvent, IEventMetadata<long>, NonDefaultPersistedEvent> fixture)
         {
             EffortProviderFactory.ResetDb();
             _fixture = fixture;
@@ -51,7 +61,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.ExtensibilityTests
         {
             var store = _fixture.BuildEventStore(_dbContext);
 
-            await store.Commit(1, 0, new FooEvent { Foo = "Bar" });
+            await store.Commit(1, 0, new[] { new FooEvent { Foo = "Bar" } });
         }
 
         [Fact]
@@ -59,18 +69,18 @@ namespace RdbmsEventStore.EntityFramework.Tests.ExtensibilityTests
         {
             _dbContext.Events.AddRange(new[]
             {
-                new NonDefaultEvent
+                new NonDefaultPersistedEvent
                 {
                     StreamId = 1,
                     Timestamp = DateTimeOffset.UtcNow,
                     Version = 1,
                     Type = "FooEvent",
-                    Payload =Encoding.UTF8.GetBytes(@"{""Foo"":""Bar""}")
+                    Payload = Encoding.UTF8.GetBytes(@"{""Foo"":""Bar""}")
                 }
             });
             await _dbContext.SaveChangesAsync();
 
-            var store = _fixture.BuildEventStore(_dbContext);
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<long, NonDefaultEvent, IEventMetadata<long>>;
 
             var events = await store.Events(1);
 

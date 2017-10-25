@@ -1,22 +1,25 @@
 ﻿using System;
+using RdbmsEventStore.Serialization;
 using Xunit;
 
 namespace RdbmsEventStore.EntityFramework.Tests.Infrastructure
 {
     [Collection(nameof(InMemoryDatabaseCollection))]
-    public class EventStoreTestBase<TId, TStreamId, TEvent> : IClassFixture<EventStoreFixture<TId, TStreamId, TEvent>>, IDisposable
+    public class EventStoreTestBase<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent> : IClassFixture<EventStoreFixture<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent>>, IDisposable
         where TId : IEquatable<TId>
         where TStreamId : IEquatable<TStreamId>
-        where TEvent : Event<TId, TStreamId>, new()
+        where TEventMetadata : IEventMetadata<TStreamId>
+        where TEvent : class, TEventMetadata, IMutableEvent<TStreamId>, new()
+        where TPersistedEvent : class, TEventMetadata, IPersistedEvent<TStreamId>, new()
     {
-        protected readonly EventStoreFixture<TId, TStreamId, TEvent> _fixture;
-        protected readonly EventStoreContext<TEvent> _dbContext;
+        protected readonly EventStoreFixture<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent> _fixture;
+        protected readonly EventStoreContext<TPersistedEvent> _dbContext;
 
-        public EventStoreTestBase(EventStoreFixture<TId, TStreamId, TEvent> fixture, AssemblyInitializerFixture initializer)
+        public EventStoreTestBase(EventStoreFixture<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent> fixture, AssemblyInitializerFixture initializer)
         {
             EffortProviderFactory.ResetDb();
             _fixture = fixture;
-            _dbContext = new EventStoreContext<TEvent>();
+            _dbContext = new EventStoreContext<TPersistedEvent>();
         }
 
         public void Dispose()

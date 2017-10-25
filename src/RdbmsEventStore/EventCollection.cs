@@ -5,11 +5,11 @@ using System.Linq;
 
 namespace RdbmsEventStore
 {
-    public class EventCollection<TId, TStreamId, TEvent> : IEnumerable<TEvent> where TEvent : IEvent<TId, TStreamId>
+    public class EventCollection<TStreamId, TEvent> : IEnumerable<TEvent> where TEvent : IEvent<TStreamId>
     {
         private readonly IEnumerable<TEvent> _events;
 
-        public EventCollection(TStreamId streamId, long currentVersion, Func<TStreamId, long, object, TEvent> factory, params object[] payloads)
+        public EventCollection(TStreamId streamId, long currentVersion, Func<TStreamId, long, object, TEvent> factory, IEnumerable<object> payloads)
         {
             _events = payloads.Select((payload, i) => factory(streamId, currentVersion + 1 + i, payload));
         }
