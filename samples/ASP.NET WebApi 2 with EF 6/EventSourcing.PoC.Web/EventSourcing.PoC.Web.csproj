@@ -100,11 +100,11 @@
     <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
       <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
     </Reference>
-    <Reference Include="RdbmsEventStore, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RdbmsEventStore.0.1.1\lib\net461\RdbmsEventStore.dll</HintPath>
+    <Reference Include="RdbmsEventStore, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RdbmsEventStore.0.4.0\lib\net461\RdbmsEventStore.dll</HintPath>
     </Reference>
-    <Reference Include="RdbmsEventStore.EntityFramework, Version=0.1.1.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\RdbmsEventStore.EntityFramework.0.1.1\lib\net461\RdbmsEventStore.EntityFramework.dll</HintPath>
+    <Reference Include="RdbmsEventStore.EntityFramework, Version=0.4.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\RdbmsEventStore.EntityFramework.0.4.0\lib\net461\RdbmsEventStore.EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="System.Collections.Immutable, Version=1.2.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Collections.Immutable.1.4.0\lib\netstandard2.0\System.Collections.Immutable.dll</HintPath>

@@ -1,12 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Reflection;
 using Autofac;
-using EventSourcing.PoC.Application.Events;
 using EventSourcing.PoC.Application.Messaging;
 using EventSourcing.PoC.Persistence;
 using RdbmsEventStore;
 using RdbmsEventStore.EventRegistry;
 using RdbmsEventStore.EntityFramework;
+using RdbmsEventStore.Serialization;
+using ApplicationEvent = EventSourcing.PoC.Application.Events.Event;
+using PersistenceEvent = EventSourcing.PoC.Persistence.Event;
 using Module = Autofac.Module;
 
 namespace EventSourcing.PoC.Web.Configuration.ServiceRegistrations
@@ -15,7 +17,7 @@ namespace EventSourcing.PoC.Web.Configuration.ServiceRegistrations
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(IEventStore<,>).GetTypeInfo().Assembly).AsImplementedInterfaces().SingleInstance();
+            builder.RegisterAssemblyTypes(typeof(IEventStream<,,>).GetTypeInfo().Assembly).AsImplementedInterfaces().SingleInstance();
 
             builder.RegisterInstance(new TranslatingEventRegistry(
                 new Dictionary<string, string>
@@ -28,7 +30,7 @@ namespace EventSourcing.PoC.Web.Configuration.ServiceRegistrations
                 .AsImplementedInterfaces().SingleInstance();
 
             builder
-                .RegisterType<EntityFrameworkEventStore<long, EventsContext, Event>>()
+                .RegisterType<EntityFrameworkEventStore<long, string, EventsContext, ApplicationEvent, IEventMetadata<string>, PersistenceEvent>>()
                 .AsImplementedInterfaces()
                 .InstancePerLifetimeScope();
 
@@ -39,7 +41,19 @@ namespace EventSourcing.PoC.Web.Configuration.ServiceRegistrations
                 .InstancePerLifetimeScope();
 
             builder
-                .RegisterType<DefaultEventFactory<long, Event>>()
+                .RegisterType<DefaultEventSerializer<string, ApplicationEvent, PersistenceEvent>>()
+                .AsSelf()
+                .AsImplementedInterfaces()
+                .InstancePerLifetimeScope();
+
+            builder
+                .RegisterType<DefaultEventFactory<string, ApplicationEvent>>()
+                .AsImplementedInterfaces()
+                .SingleInstance();
+
+            builder
+                .RegisterType<WriteLock<string>>()
+                .AsSelf()
                 .AsImplementedInterfaces()
                 .SingleInstance();
 

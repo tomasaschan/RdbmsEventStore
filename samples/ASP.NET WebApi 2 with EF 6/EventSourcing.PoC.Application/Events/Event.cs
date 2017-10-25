@@ -1,6 +1,6 @@
-﻿using RdbmsEventStore.EntityFramework;
+﻿using RdbmsEventStore;
 
 namespace EventSourcing.PoC.Application.Events
 {
-    public class Event : Event<long> { }
+    public class Event : Event<string> { }
 }

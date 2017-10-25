@@ -1,5 +1,4 @@
-﻿using EventSourcing.PoC.Application.Events;
-using RdbmsEventStore.EntityFramework;
+﻿using RdbmsEventStore.EntityFramework;
 
 namespace EventSourcing.PoC.Persistence
 {

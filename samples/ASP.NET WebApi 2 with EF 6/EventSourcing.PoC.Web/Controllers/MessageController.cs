@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web.Http;
 using EventSourcing.PoC.Application.Messaging;
 using MediatR;
+using RdbmsEventStore;
 
 namespace EventSourcing.PoC.Web.Controllers
 {
@@ -36,6 +38,10 @@ namespace EventSourcing.PoC.Web.Controllers
             catch (ArgumentException ex)
             {
                 return BadRequest(ex.Message);
+            }
+            catch (ConflictException ex)
+            {
+                return Content(HttpStatusCode.Conflict, ex.Message);
             }
         }
     }
