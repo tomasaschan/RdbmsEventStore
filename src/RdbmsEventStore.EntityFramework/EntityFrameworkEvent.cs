@@ -9,23 +9,23 @@ namespace RdbmsEventStore.EntityFramework
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-        public TId EventId { get; set; }
+        public virtual TId EventId { get; set; }
 
         [Required]
         public DateTimeOffset Timestamp { get; set; }
 
         [Index(Order = 1)]
         [Required]
-        public TStreamId StreamId { get; set; }
+        public virtual TStreamId StreamId { get; set; }
 
         [Required]
         [Index(Order = 2)]
-        public long Version { get; set; }
+        public virtual long Version { get; set; }
 
         [Required]
-        public string Type { get; set; }
+        public virtual string Type { get; set; }
 
         [Required]
-        public byte[] Payload { get; set; }
+        public virtual byte[] Payload { get; set; }
     }
 }
