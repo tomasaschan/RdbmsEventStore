@@ -2,9 +2,27 @@
 
 namespace RdbmsEventStore.EntityFramework.Tests.TestData
 {
-    public class GuidGuidEvent : Event<Guid, Guid> { }
-    public class LongStringEvent : Event<long, string> { }
-    public class LongLongEvent : Event<long, long> { }
+    public class GuidEvent : Event<Guid> { }
+    public class GuidGuidPersistedEvent : EntityFrameworkEvent<Guid, Guid> { }
+    public class StringEvent : Event<string> { }
+    public class LongStringPersistedEvent : EntityFrameworkEvent<long, string> { }
+    public class LongEvent : Event<long> { }
+    public class LongLongPersistedEvent : EntityFrameworkEvent<long, long> { }
+
+    public interface IExtraMeta : IEventMetadata<string>
+    {
+        string ExtraMeta { get; set; }
+    }
+
+    public class ExtraMetaStringEvent : Event<string>, IExtraMeta
+    {
+        public string ExtraMeta { get; set; }
+    }
+
+    public class ExtraMetaLongStringPersistedEventMetadata : EntityFrameworkEvent<long, string>, IExtraMeta
+    {
+        public string ExtraMeta { get; set; }
+    }
 
     public class FooEvent
     {

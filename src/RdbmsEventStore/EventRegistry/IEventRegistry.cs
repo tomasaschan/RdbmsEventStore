@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace RdbmsEventStore
+namespace RdbmsEventStore.EventRegistry
 {
     public interface IEventRegistry
     {
