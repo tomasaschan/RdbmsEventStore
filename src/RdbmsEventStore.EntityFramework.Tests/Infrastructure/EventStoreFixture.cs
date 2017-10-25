@@ -19,13 +19,13 @@ namespace RdbmsEventStore.EntityFramework.Tests.Infrastructure
             EventRegistry = new AssemblyEventRegistry(typeof(TEvent), type => type.Name, type => !type.Name.StartsWith("<>"));
             EventSerializer = new DefaultEventSerializer<TStreamId, TEvent, TPersistedEvent>(EventRegistry);
             EventFactory = new DefaultEventFactory<TStreamId, TEvent>();
-            WriteLock = new WriteLock();
+            WriteLock = new WriteLock<TStreamId>();
         }
 
         public IEventRegistry EventRegistry { get; protected set; }
         public IEventSerializer<TEvent, TPersistedEvent> EventSerializer { get; protected set; }
         public IEventFactory<TStreamId, TEvent> EventFactory { get; protected set; }
-        public IWriteLock WriteLock { get; protected set; }
+        public IWriteLock<TStreamId> WriteLock { get; protected set; }
 
         public EntityFrameworkEventStore<TId, TStreamId, TEventStoreContext, TEvent, TEventMetadata, TPersistedEvent> BuildEventStore<TEventStoreContext>(TEventStoreContext dbContext)
             where TEventStoreContext : DbContext, IEventDbContext<TPersistedEvent>

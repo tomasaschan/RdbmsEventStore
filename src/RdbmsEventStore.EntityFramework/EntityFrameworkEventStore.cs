@@ -17,10 +17,10 @@ namespace RdbmsEventStore.EntityFramework
     {
         private readonly TContext context;
         private readonly IEventFactory<TStreamId, TEvent> _eventFactory;
-        private readonly IWriteLock _writeLock;
+        private readonly IWriteLock<TStreamId> _writeLock;
         private readonly IEventSerializer<TEvent, TPersistedEvent> _serializer;
 
-        public EntityFrameworkEventStore(TContext context, IEventFactory<TStreamId, TEvent> eventFactory, IWriteLock writeLock, IEventSerializer<TEvent, TPersistedEvent> serializer)
+        public EntityFrameworkEventStore(TContext context, IEventFactory<TStreamId, TEvent> eventFactory, IWriteLock<TStreamId> writeLock, IEventSerializer<TEvent, TPersistedEvent> serializer)
         {
             this.context = context;
             _eventFactory = eventFactory;
@@ -49,7 +49,7 @@ namespace RdbmsEventStore.EntityFramework
 
         public async Task Append(TStreamId streamId, long versionBefore, IEnumerable<object> payloads)
         {
-            using (await _writeLock.Aquire())
+            using (await _writeLock.Aquire(streamId))
             {
                 var highestVersionNumber = await context.Events
                     .Where(e => e.StreamId.Equals(streamId))
