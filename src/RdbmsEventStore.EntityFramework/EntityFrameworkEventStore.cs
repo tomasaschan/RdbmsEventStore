@@ -44,10 +44,10 @@ namespace RdbmsEventStore.EntityFramework
             return events;
         }
 
-        public Task Commit(TStreamId streamId, long versionBefore, object payload)
-            => Commit(streamId, versionBefore, new[] { payload });
+        public Task Append(TStreamId streamId, long versionBefore, object payload)
+            => Append(streamId, versionBefore, new[] { payload });
 
-        public async Task Commit(TStreamId streamId, long versionBefore, IEnumerable<object> payloads)
+        public async Task Append(TStreamId streamId, long versionBefore, IEnumerable<object> payloads)
         {
             using (await _writeLock.Aquire())
             {

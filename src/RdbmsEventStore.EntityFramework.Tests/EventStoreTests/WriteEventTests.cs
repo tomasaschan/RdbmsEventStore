@@ -19,7 +19,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         public async Task CommittingEventStoresEventInContext()
         {
             var store = _fixture.BuildEventStore(_dbContext);
-            await store.Commit(Guid.NewGuid(), 0, new[] { new FooEvent { Foo = "Bar" } });
+            await store.Append(Guid.NewGuid(), 0, new[] { new FooEvent { Foo = "Bar" } });
             Assert.Equal(1, await _dbContext.Events.CountAsync());
         }
 
@@ -31,7 +31,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
             _dbContext.Events.AddRange(_fixture.EventFactory.Create(stream, 0, new[] { new FooEvent { Foo = "Bar" } }).Select(_fixture.EventSerializer.Serialize));
             await _dbContext.SaveChangesAsync();
 
-            await Assert.ThrowsAsync<ConflictException>(() => store.Commit(stream, 0, new[] { new FooEvent { Foo = "Qux" } }));
+            await Assert.ThrowsAsync<ConflictException>(() => store.Append(stream, 0, new[] { new FooEvent { Foo = "Qux" } }));
         }
 
         [Fact]
@@ -42,7 +42,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
             var store = _fixture.BuildEventStore(_dbContext);
 
             var events = new[] { new FooEvent { Foo = "Foo" }, new FooEvent { Foo = "Bar" } };
-            await store.Commit(Guid.NewGuid(), 0, events);
+            await store.Append(Guid.NewGuid(), 0, events);
 
             Assert.Equal(2, await _dbContext.Events.CountAsync());
         }
@@ -55,7 +55,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
             var store = _fixture.BuildEventStore(_dbContext);
 
             var events = new object[] { new FooEvent { Foo = "Foo" }, new BarEvent { Bar = "Bar" } };
-            await store.Commit(Guid.NewGuid(), 0, events);
+            await store.Append(Guid.NewGuid(), 0, events);
 
             Assert.Collection(await _dbContext.Events.OrderBy(e => e.Version).ToListAsync(),
                 foo => Assert.Equal(typeof(FooEvent), _fixture.EventRegistry.TypeFor(foo.Type)),
@@ -69,7 +69,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
 
             var store = _fixture.BuildEventStore(_dbContext);
             var events = new object[] { new FooEvent { Foo = "Foo" }, new BarEvent { Bar = "Bar" } };
-            await store.Commit(Guid.NewGuid(), 0, events);
+            await store.Append(Guid.NewGuid(), 0, events);
 
             var storedEvents = await _dbContext.Events.OrderBy(e => e.Timestamp).ToListAsync();
             Assert.Collection(storedEvents,

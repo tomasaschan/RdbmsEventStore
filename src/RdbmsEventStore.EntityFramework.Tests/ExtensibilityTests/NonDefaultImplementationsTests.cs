@@ -61,7 +61,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.ExtensibilityTests
         {
             var store = _fixture.BuildEventStore(_dbContext);
 
-            await store.Commit(1, 0, new[] { new FooEvent { Foo = "Bar" } });
+            await store.Append(1, 0, new[] { new FooEvent { Foo = "Bar" } });
         }
 
         [Fact]

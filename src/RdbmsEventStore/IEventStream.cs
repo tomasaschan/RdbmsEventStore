@@ -13,8 +13,8 @@ namespace RdbmsEventStore
 
         Task<IEnumerable<TEvent>> Events(TStreamId streamId, Func<IQueryable<TEventMetadata>, IQueryable<TEventMetadata>> query);
 
-        Task Commit(TStreamId streamId, long versionBefore, object payload);
+        Task Append(TStreamId streamId, long versionBefore, object payload);
 
-        Task Commit(TStreamId streamId, long versionBefore, IEnumerable<object> payloads);
+        Task Append(TStreamId streamId, long versionBefore, IEnumerable<object> payloads);
     }
 }
