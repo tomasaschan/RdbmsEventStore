@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RdbmsEventStore.EntityFramework.Tests.Infrastructure;
@@ -84,7 +83,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.ExtensibilityTests
 
             var events = await store.Events(1);
 
-            Assert.Equal(1, events.Count());
+            Assert.Single(events);
         }
         public void Dispose()
         {

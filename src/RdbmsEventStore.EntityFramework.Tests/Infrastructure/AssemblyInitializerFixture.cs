@@ -10,6 +10,6 @@ namespace RdbmsEventStore.EntityFramework.Tests.Infrastructure
         }
     }
 
-    [CollectionDefinition(nameof(InMemoryDatabaseCollection))]
+    [CollectionDefinition(nameof(InMemoryDatabaseCollection), DisableParallelization = true)]
     public class InMemoryDatabaseCollection : ICollectionFixture<AssemblyInitializerFixture> { }
 }
