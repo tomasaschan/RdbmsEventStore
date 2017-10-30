@@ -3,6 +3,7 @@ image: Visual Studio 2017
 environment:
   NUGET_API_KEY:
     secure: eEi8gt5ne+a+N5fYINa2DqF7DCqOzYCE5udL5XzZm2qhcaMJkg9Tg4d0QObF9s3L
+cache: src/packages
 init:
   - git config --global core.autocrlf true
 dotnet_csproj:
