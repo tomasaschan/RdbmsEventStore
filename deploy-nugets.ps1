@@ -12,9 +12,7 @@ $packages = Get-ChildItem dist `
     | Select-Object -ExpandProperty FullName `
     | Where-Object { $_ -notlike '*.symbols.nupkg' }
 
-$pushed = nuget list RdbmsEventStore `
-    | Select-Object @{ Name="FileName"; Expression = { "$($_.Replace(" ", ",")).nupkg" } } `
-    | Select-Object -ExpandProperty FileName
+$pushed = $((nuget list RdbmsEventStore).Replace(" ", ",") -replace "$",".nupkg")
 
 $packages `
     | Where-Object { ($_ | Split-Path -Leaf) -notin $pushed } `
