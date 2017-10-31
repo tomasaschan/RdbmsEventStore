@@ -28,7 +28,23 @@ namespace RdbmsEventStore.EntityFramework
             _serializer = serializer;
         }
 
-        public Task<IEnumerable<TEvent>> Events(TStreamId streamId) => Events(streamId, query => query);
+        public  Task<IEnumerable<TEvent>> Events() => Events(events => events);
+
+        public async Task<IEnumerable<TEvent>> Events(Func<IQueryable<TEventMetadata>, IQueryable<TEventMetadata>> query)
+        {
+            var storedEvents = await context.Events
+                .AsNoTracking()
+                .Apply(query)
+                .ToListAsync();
+
+            var events = storedEvents
+                .Cast<TPersistedEvent>()
+                .Select(_serializer.Deserialize);
+
+            return events;
+        }
+
+        public Task<IEnumerable<TEvent>> Events(TStreamId streamId) => Events(streamId, events => events);
 
         public async Task<IEnumerable<TEvent>> Events(TStreamId streamId, Func<IQueryable<TEventMetadata>, IQueryable<TEventMetadata>> query)
         {

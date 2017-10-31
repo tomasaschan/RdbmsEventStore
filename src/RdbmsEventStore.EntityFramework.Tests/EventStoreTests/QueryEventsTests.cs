@@ -46,5 +46,21 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
             var events = await store.Events(streamId, es => es.Where(e => e.Version > 1));
             Assert.Equal(expectedCount, events.Count());
         }
+
+        [Fact]
+        public async Task ReturnsAllEvents()
+        {
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<string, StringEvent, IEventMetadata<string>>;
+            var events = await store.Events();
+            Assert.Equal(5, events.Count());
+        }
+
+        [Fact]
+        public async Task ReturnsAllEventsAccordingToQuery()
+        {
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<string, StringEvent, IEventMetadata<string>>;
+            var events = await store.Events(es => es.Where(e => e.Version > 1));
+            Assert.Equal(3, events.Count());
+        }
     }
 }
