@@ -9,6 +9,10 @@ namespace RdbmsEventStore
         where TEvent : IEvent<TStreamId>, TEventMetadata
         where TEventMetadata : IEventMetadata<TStreamId>
     {
+        Task<IEnumerable<TEvent>> Events();
+
+        Task<IEnumerable<TEvent>> Events(Func<IQueryable<TEventMetadata>, IQueryable<TEventMetadata>> query);
+
         Task<IEnumerable<TEvent>> Events(TStreamId streamId);
 
         Task<IEnumerable<TEvent>> Events(TStreamId streamId, Func<IQueryable<TEventMetadata>, IQueryable<TEventMetadata>> query);
