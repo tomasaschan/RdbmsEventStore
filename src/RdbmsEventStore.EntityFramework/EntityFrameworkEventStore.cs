@@ -35,6 +35,7 @@ namespace RdbmsEventStore.EntityFramework
             var storedEvents = await context.Events
                 .AsNoTracking()
                 .Apply(query)
+                .OrderBy(e => e.Timestamp)
                 .ToListAsync();
 
             var events = storedEvents
@@ -52,7 +53,9 @@ namespace RdbmsEventStore.EntityFramework
                     .Where(e => e.StreamId.Equals(streamId))
                     .AsNoTracking()
                     .Apply(query)
+                    .OrderBy(e => e.Timestamp)
                     .ToListAsync();
+
             var events = storedEvents
                 .Cast<TPersistedEvent>()
                 .Select(_serializer.Deserialize);
