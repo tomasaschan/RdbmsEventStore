@@ -15,14 +15,14 @@ namespace RdbmsEventStore.EntityFramework
         where TPersistedEvent : class, IPersistedEvent<TStreamId>, TEventMetadata, new()
         where TEventMetadata : class, IEventMetadata<TStreamId>
     {
-        private readonly TContext context;
+        private readonly TContext _context;
         private readonly IEventFactory<TStreamId, TEvent> _eventFactory;
         private readonly IWriteLock<TStreamId> _writeLock;
         private readonly IEventSerializer<TEvent, TPersistedEvent> _serializer;
 
         public EntityFrameworkEventStore(TContext context, IEventFactory<TStreamId, TEvent> eventFactory, IWriteLock<TStreamId> writeLock, IEventSerializer<TEvent, TPersistedEvent> serializer)
         {
-            this.context = context;
+            _context = context;
             _eventFactory = eventFactory;
             _writeLock = writeLock;
             _serializer = serializer;
@@ -32,7 +32,7 @@ namespace RdbmsEventStore.EntityFramework
 
         public async Task<IEnumerable<TEvent>> Events(Func<IQueryable<TEventMetadata>, IQueryable<TEventMetadata>> query)
         {
-            var storedEvents = await context.Events
+            var storedEvents = await _context.Events
                 .AsNoTracking()
                 .Apply(query)
                 .OrderBy(e => e.Timestamp)
@@ -70,7 +70,7 @@ namespace RdbmsEventStore.EntityFramework
         {
             using (await _writeLock.Aquire(streamId))
             {
-                var highestVersionNumber = await context.Events
+                var highestVersionNumber = await _context.Events
                     .Where(e => e.StreamId.Equals(streamId))
                     .Select(e => e.Version)
                     .DefaultIfEmpty(0)
@@ -82,8 +82,8 @@ namespace RdbmsEventStore.EntityFramework
                 }
 
                 var events = _eventFactory.Create(streamId, versionBefore, payloads).Select(_serializer.Serialize);
-                context.Events.AddRange(events);
-                await context.SaveChangesAsync();
+                _context.Events.AddRange(events);
+                await _context.SaveChangesAsync();
             }
         }
     }
