@@ -13,7 +13,7 @@ namespace RdbmsEventStore.EntityFramework
         where TContext : DbContext, IEventDbContext<TPersistedEvent>
         where TEvent : class, TEventMetadata, IMutableEvent<TStreamId>, new()
         where TPersistedEvent : class, IPersistedEvent<TStreamId>, TEventMetadata, new()
-        where TEventMetadata : IEventMetadata<TStreamId>
+        where TEventMetadata : class, IEventMetadata<TStreamId>
     {
         private readonly TContext context;
         private readonly IEventFactory<TStreamId, TEvent> _eventFactory;
