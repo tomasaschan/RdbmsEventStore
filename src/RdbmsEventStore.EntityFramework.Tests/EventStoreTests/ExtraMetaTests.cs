@@ -64,7 +64,11 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         public async Task ReturnsEventsWithMetadata(string streamId, long expectedCount)
         {
             var store = _fixture.BuildEventStore(_dbContext) as IEventStore<string, ExtraMetaStringEvent, IExtraMeta>;
-            var events = await store.Events(streamId, es => es.Where(e => e.ExtraMeta.StartsWith("Foo")));
+            var events = await store
+                .Events(streamId, es => es.Where(e => e.ExtraMeta.StartsWith("Foo")))
+                .ToReadOnlyCollection();
+
+            Assert.Equal(expectedCount, events.Count);
             Assert.All(events, @event => Assert.StartsWith("Foo", @event.ExtraMeta));
         }
 
