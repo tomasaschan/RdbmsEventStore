@@ -79,7 +79,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.ExtensibilityTests
             });
             await _dbContext.SaveChangesAsync();
 
-            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<long, NonDefaultEvent, IEventMetadata<long>>;
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStore<long, NonDefaultEvent, IEventMetadata<long>>;
 
             var events = await store.Events(1);
 

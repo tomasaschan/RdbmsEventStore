@@ -7,7 +7,7 @@ using RdbmsEventStore.Serialization;
 
 namespace RdbmsEventStore.EntityFramework
 {
-    public class EntityFrameworkEventStore<TId, TStreamId, TContext, TEvent, TEventMetadata, TPersistedEvent> : IEventStream<TStreamId, TEvent, TEventMetadata>
+    public class EntityFrameworkEventStore<TId, TStreamId, TContext, TEvent, TEventMetadata, TPersistedEvent> : IEventStore<TStreamId, TEvent, TEventMetadata>
         where TId : IEquatable<TId>
         where TStreamId : IEquatable<TStreamId>
         where TContext : DbContext, IEventDbContext<TPersistedEvent>

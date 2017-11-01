@@ -32,7 +32,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         [InlineData("stream-2", 2)]
         public async Task ReturnsEventsFromCorrectStreamOnly(string streamId, long expectedCount)
         {
-            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<string, StringEvent, IEventMetadata<string>>;
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStore<string, StringEvent, IEventMetadata<string>>;
             var events = await store.Events(streamId);
             Assert.Equal(expectedCount, events.Count());
         }
@@ -42,7 +42,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         [InlineData("stream-2", 1)]
         public async Task ReturnsEventsAccordingToQuery(string streamId, long expectedCount)
         {
-            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<string, StringEvent, IEventMetadata<string>>;
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStore<string, StringEvent, IEventMetadata<string>>;
             var events = await store.Events(streamId, es => es.Where(e => e.Version > 1));
             Assert.Equal(expectedCount, events.Count());
         }
@@ -50,7 +50,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         [Fact]
         public async Task ReturnsAllEvents()
         {
-            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<string, StringEvent, IEventMetadata<string>>;
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStore<string, StringEvent, IEventMetadata<string>>;
             var events = await store.Events();
             Assert.Equal(5, events.Count());
         }
@@ -58,7 +58,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         [Fact]
         public async Task ReturnsAllEventsAccordingToQuery()
         {
-            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<string, StringEvent, IEventMetadata<string>>;
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStore<string, StringEvent, IEventMetadata<string>>;
             var events = await store.Events(es => es.Where(e => e.Version > 1));
             Assert.Equal(3, events.Count());
         }

@@ -43,7 +43,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         [InlineData("stream-2", 2)]
         public async Task ReturnsEventsFromCorrectStreamOnly(string streamId, long expectedCount)
         {
-            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<string, ExtraMetaStringEvent, IExtraMeta>;
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStore<string, ExtraMetaStringEvent, IExtraMeta>;
             var events = await store.Events(streamId);
             Assert.Equal(expectedCount, events.Count());
         }
@@ -53,7 +53,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         [InlineData("stream-2", 1)]
         public async Task ReturnsEventsAccordingToQuery(string streamId, long expectedCount)
         {
-            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<string, ExtraMetaStringEvent, IExtraMeta>;
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStore<string, ExtraMetaStringEvent, IExtraMeta>;
             var events = await store.Events(streamId, es => es.Where(e => e.ExtraMeta.StartsWith("Foo")));
             Assert.Equal(expectedCount, events.Count());
         }
@@ -63,7 +63,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         [InlineData("stream-2", 1)]
         public async Task ReturnsEventsWithMetadata(string streamId, long expectedCount)
         {
-            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<string, ExtraMetaStringEvent, IExtraMeta>;
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStore<string, ExtraMetaStringEvent, IExtraMeta>;
             var events = await store.Events(streamId, es => es.Where(e => e.ExtraMeta.StartsWith("Foo")));
             Assert.All(events, @event => Assert.StartsWith("Foo", @event.ExtraMeta));
         }
@@ -73,7 +73,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
         [InlineData("stream-2", 1)]
         public async Task CanQueryByExtraMetadata(string streamId, long expectedCount)
         {
-            var store = _fixture.BuildEventStore(_dbContext) as IEventStream<string, ExtraMetaStringEvent, IExtraMeta>;
+            var store = _fixture.BuildEventStore(_dbContext) as IEventStore<string, ExtraMetaStringEvent, IExtraMeta>;
             var events = await store.Events(streamId, es => es.Where(e => e.ExtraMeta.StartsWith("Foo")));
             Assert.Equal(expectedCount, events.Count());
         }

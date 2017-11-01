@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace RdbmsEventStore
 {
-    public interface IEventStream<in TStreamId, TEvent, TEventMetadata>
+    public interface IEventStore<in TStreamId, TEvent, TEventMetadata>
         where TStreamId : IEquatable<TStreamId>
         where TEvent : IEvent<TStreamId>, TEventMetadata
         where TEventMetadata : IEventMetadata<TStreamId>
