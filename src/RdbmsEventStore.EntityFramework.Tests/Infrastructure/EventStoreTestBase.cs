@@ -8,7 +8,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.Infrastructure
     public class EventStoreTestBase<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent> : IClassFixture<EventStoreFixture<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent>>, IDisposable
         where TId : IEquatable<TId>
         where TStreamId : IEquatable<TStreamId>
-        where TEventMetadata : IEventMetadata<TStreamId>
+        where TEventMetadata : class, IEventMetadata<TStreamId>
         where TEvent : class, TEventMetadata, IMutableEvent<TStreamId>, new()
         where TPersistedEvent : class, TEventMetadata, IPersistedEvent<TStreamId>, new()
     {

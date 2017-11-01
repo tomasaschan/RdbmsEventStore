@@ -13,7 +13,7 @@ namespace RdbmsEventStore.EntityFramework
         where TContext : DbContext, IEventDbContext<TPersistedEvent>
         where TEvent : class, TEventMetadata, IMutableEvent<TStreamId>, new()
         where TPersistedEvent : class, IPersistedEvent<TStreamId>, TEventMetadata, new()
-        where TEventMetadata : IEventMetadata<TStreamId>
+        where TEventMetadata : class, IEventMetadata<TStreamId>
     {
         private readonly TContext context;
         private readonly IEventFactory<TStreamId, TEvent> _eventFactory;
@@ -35,6 +35,7 @@ namespace RdbmsEventStore.EntityFramework
             var storedEvents = await context.Events
                 .AsNoTracking()
                 .Apply(query)
+                .OrderBy(e => e.Timestamp)
                 .ToListAsync();
 
             var events = storedEvents
@@ -52,7 +53,9 @@ namespace RdbmsEventStore.EntityFramework
                     .Where(e => e.StreamId.Equals(streamId))
                     .AsNoTracking()
                     .Apply(query)
+                    .OrderBy(e => e.Timestamp)
                     .ToListAsync();
+
             var events = storedEvents
                 .Cast<TPersistedEvent>()
                 .Select(_serializer.Deserialize);

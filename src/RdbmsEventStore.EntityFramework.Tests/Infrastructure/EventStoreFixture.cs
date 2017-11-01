@@ -12,7 +12,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.Infrastructure
         where TStreamId : IEquatable<TStreamId>
         where TEvent : class, TEventMetadata, IMutableEvent<TStreamId>, new()
         where TPersistedEvent : class, TEventMetadata, IPersistedEvent<TStreamId>, new()
-        where TEventMetadata : IEventMetadata<TStreamId>
+        where TEventMetadata : class, IEventMetadata<TStreamId>
     {
         public EventStoreFixture()
         {
