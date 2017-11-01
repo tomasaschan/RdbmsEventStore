@@ -28,8 +28,6 @@ namespace RdbmsEventStore.EntityFramework
             _serializer = serializer;
         }
 
-        public  Task<IEnumerable<TEvent>> Events() => Events(events => events);
-
         public async Task<IEnumerable<TEvent>> Events(Func<IQueryable<TEventMetadata>, IQueryable<TEventMetadata>> query)
         {
             var storedEvents = await _context.Events
@@ -44,14 +42,6 @@ namespace RdbmsEventStore.EntityFramework
 
             return events;
         }
-
-        public Task<IEnumerable<TEvent>> Events(TStreamId streamId) => Events(streamId, events => events);
-
-        public Task<IEnumerable<TEvent>> Events(TStreamId streamId, Func<IQueryable<TEventMetadata>, IQueryable<TEventMetadata>> query)
-            => Events(events => events.Where(e => e.StreamId.Equals(streamId)).Apply(query));
-
-        public Task Append(TStreamId streamId, long versionBefore, object payload)
-            => Append(streamId, versionBefore, new[] { payload });
 
         public async Task Append(TStreamId streamId, long versionBefore, IEnumerable<object> payloads)
         {
