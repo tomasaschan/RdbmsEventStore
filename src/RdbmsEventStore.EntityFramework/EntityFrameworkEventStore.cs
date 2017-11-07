@@ -45,6 +45,10 @@ namespace RdbmsEventStore.EntityFramework
 
         public async Task Append(TStreamId streamId, long versionBefore, IEnumerable<object> payloads)
         {
+            if (!payloads.Any()) {
+                return;
+            }
+
             using (await _writeLock.Aquire(streamId))
             {
                 var highestVersionNumber = await _context.Events

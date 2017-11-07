@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using RdbmsEventStore.EntityFramework.Tests.Infrastructure;
 using RdbmsEventStore.EntityFramework.Tests.TestData;
+using Moq;
 using Xunit;
 
 
@@ -32,6 +33,25 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
             await _dbContext.SaveChangesAsync();
 
             await Assert.ThrowsAsync<ConflictException>(() => store.Append(stream, 0, new[] { new FooEvent { Foo = "Qux" } }));
+        }
+
+        [Fact]
+        public async Task CommittingNoEventsExitsEarly() {
+            var context = new Mock<EventStoreContext<GuidGuidPersistedEvent>>(MockBehavior.Strict);
+            var set = new Mock<DbSet<GuidGuidPersistedEvent>>(MockBehavior.Strict);
+            context.Setup(c => c.Set<GuidGuidPersistedEvent>()).Returns(set.Object);
+            var stream = Guid.NewGuid();
+
+            var store = _fixture.BuildEventStore(context.Object);
+
+            try {
+                await store.Append(stream, 0, new object[] { });
+            } catch (NotImplementedException) {
+                // Thrown by the mock DbSet if we try to query for existing events
+                // This indicates that we didn't exit early
+
+                Assert.False(true, "Expected to exit early, but apparently didn't.");
+            }
         }
 
         [Fact]
