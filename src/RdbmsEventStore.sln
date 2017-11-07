@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27004.2005
@@ -25,10 +25,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore.Tests", "Rd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore.EntityFramework.Tests", "RdbmsEventStore.EntityFramework.Tests\RdbmsEventStore.EntityFramework.Tests.csproj", "{0096C881-9347-454E-B0A0-73C7CABDBF37}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tlycken.Extensions", "tlycken.Extensions\tlycken.Extensions.csproj", "{3D60C8BA-ACC3-4CBC-B47C-79A504553C93}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "tlycken.Extensions.Tests", "tlycken.Extensions.Tests\tlycken.Extensions.Tests.csproj", "{08FAE0C2-B435-4BA9-8CC4-52EC7FE1EDD6}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,14 +47,6 @@ Global
 		{0096C881-9347-454E-B0A0-73C7CABDBF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0096C881-9347-454E-B0A0-73C7CABDBF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0096C881-9347-454E-B0A0-73C7CABDBF37}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3D60C8BA-ACC3-4CBC-B47C-79A504553C93}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3D60C8BA-ACC3-4CBC-B47C-79A504553C93}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3D60C8BA-ACC3-4CBC-B47C-79A504553C93}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3D60C8BA-ACC3-4CBC-B47C-79A504553C93}.Release|Any CPU.Build.0 = Release|Any CPU
-		{08FAE0C2-B435-4BA9-8CC4-52EC7FE1EDD6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{08FAE0C2-B435-4BA9-8CC4-52EC7FE1EDD6}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{08FAE0C2-B435-4BA9-8CC4-52EC7FE1EDD6}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{08FAE0C2-B435-4BA9-8CC4-52EC7FE1EDD6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -66,7 +54,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E58D4AE3-79B6-4B36-9693-9D852222D06E} = {B3BDC65F-EA8A-4CDC-85FC-0AA1C48C95A8}
 		{0096C881-9347-454E-B0A0-73C7CABDBF37} = {B3BDC65F-EA8A-4CDC-85FC-0AA1C48C95A8}
-		{08FAE0C2-B435-4BA9-8CC4-52EC7FE1EDD6} = {B3BDC65F-EA8A-4CDC-85FC-0AA1C48C95A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CA4860B3-3208-41C0-8FB9-719E00FBAD0D}

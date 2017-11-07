@@ -22,8 +22,4 @@
     <PackageReference Include="Nito.AsyncEx.Coordination" Version="1.0.2" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\tlycken.Extensions\tlycken.Extensions.csproj" />
-  </ItemGroup>
-
 </Project>
