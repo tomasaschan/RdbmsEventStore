@@ -13,13 +13,13 @@ namespace RdbmsEventStore.EntityFramework.Tests.Infrastructure
         where TPersistedEvent : class, TEventMetadata, IPersistedEvent<TStreamId>, new()
     {
         protected readonly EventStoreFixture<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent> _fixture;
-        protected readonly EventStoreContext<TPersistedEvent> _dbContext;
+        protected readonly EntityFrameworkEventStoreContext<TPersistedEvent> _dbContext;
 
         public EventStoreTestBase(EventStoreFixture<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent> fixture, AssemblyInitializerFixture initializer)
         {
             EffortProviderFactory.ResetDb();
             _fixture = fixture;
-            _dbContext = new EventStoreContext<TPersistedEvent>();
+            _dbContext = new EntityFrameworkEventStoreContext<TPersistedEvent>();
         }
 
         public void Dispose()

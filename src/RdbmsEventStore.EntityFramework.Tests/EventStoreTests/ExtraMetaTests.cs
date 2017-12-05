@@ -12,14 +12,14 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
     public class ExtraMetaTests : IClassFixture<ExtraMetaEventFactoryFixture>
     {
         private readonly ExtraMetaEventFactoryFixture _fixture;
-        private readonly EventStoreContext<ExtraMetaLongStringPersistedEventMetadata> _dbContext;
+        private readonly EntityFrameworkEventStoreContext<ExtraMetaLongStringPersistedEventMetadata> _dbContext;
 
         // ReSharper disable once UnusedParameter.Local
         public ExtraMetaTests(ExtraMetaEventFactoryFixture fixture, AssemblyInitializerFixture _)
         {
             EffortProviderFactory.ResetDb();
             _fixture = fixture;
-            _dbContext = new EventStoreContext<ExtraMetaLongStringPersistedEventMetadata>();
+            _dbContext = new EntityFrameworkEventStoreContext<ExtraMetaLongStringPersistedEventMetadata>();
 
             var stream1 = _fixture.EventFactory.Create("stream-1", 0, new object[] {
                     new FooEvent { Foo = "Foo" },
