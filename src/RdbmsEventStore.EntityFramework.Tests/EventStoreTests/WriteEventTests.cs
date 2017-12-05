@@ -37,7 +37,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.EventStoreTests
 
         [Fact]
         public async Task CommittingNoEventsExitsEarly() {
-            var context = new Mock<EventStoreContext<GuidGuidPersistedEvent>>(MockBehavior.Strict);
+            var context = new Mock<EntityFrameworkEventStoreContext<GuidGuidPersistedEvent>>(MockBehavior.Strict);
             var set = new Mock<DbSet<GuidGuidPersistedEvent>>(MockBehavior.Strict);
             context.Setup(c => c.Set<GuidGuidPersistedEvent>()).Returns(set.Object);
             var stream = Guid.NewGuid();
