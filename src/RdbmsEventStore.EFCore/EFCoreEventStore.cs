@@ -44,7 +44,7 @@ namespace RdbmsEventStore.EFCore
             return events;
         }
 
-        public async Task Append(TStreamId streamId, long versionBefore, IEnumerable<object> payloads)
+        public async Task Append(TStreamId streamId, DateTimeOffset? versionBefore, IEnumerable<object> payloads)
         {
             if (!payloads.Any())
             {
@@ -55,16 +55,23 @@ namespace RdbmsEventStore.EFCore
             {
                 var highestVersionNumber = await _dbContext.Events
                     .Where(e => e.StreamId.Equals(streamId))
-                    .Select(e => e.Version)
-                    .DefaultIfEmpty(0)
-                    .MaxAsync();
+                    .Select(e => e.Timestamp)
+                    .DefaultIfEmpty(DateTimeOffset.MinValue)
+                    .MaxAsync() as DateTimeOffset?;
+
+                if (highestVersionNumber == DateTimeOffset.MinValue)
+                {
+                    highestVersionNumber = null;
+                }
 
                 if (highestVersionNumber != versionBefore)
                 {
                     throw new ConflictException(streamId, versionBefore, highestVersionNumber, payloads);
                 }
 
-                var events = _eventFactory.Create(streamId, versionBefore, payloads).Select(_eventSerializer.Serialize);
+                var events = _eventFactory.Create(streamId, payloads)
+                    .Select(_eventSerializer.Serialize)
+                    .VersionedPerTimestamp<TPersistedEvent, TStreamId>();
                 _dbContext.Events.AddRange(events);
                 await _dbContext.SaveChangesAsync();
             }

@@ -7,7 +7,5 @@ namespace RdbmsEventStore
         DateTimeOffset Timestamp { get; }
 
         TStreamId StreamId { get; }
-
-        long Version { get; }
     }
 }

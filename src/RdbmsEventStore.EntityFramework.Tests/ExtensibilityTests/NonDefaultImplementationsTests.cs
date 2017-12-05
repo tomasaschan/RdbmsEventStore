@@ -15,7 +15,6 @@ namespace RdbmsEventStore.EntityFramework.Tests.ExtensibilityTests
     {
         public DateTimeOffset Timestamp { get; set; }
         public long StreamId { get; set; }
-        public long Version { get; set; }
         public Type Type { get; set; }
         public object Payload { get; set; }
     }
@@ -60,7 +59,7 @@ namespace RdbmsEventStore.EntityFramework.Tests.ExtensibilityTests
         {
             var store = _fixture.BuildEventStore(_dbContext);
 
-            await store.Append(1, 0, new[] { new FooEvent { Foo = "Bar" } });
+            await store.Append(1, null, new[] { new FooEvent { Foo = "Bar" } });
         }
 
         [Fact]

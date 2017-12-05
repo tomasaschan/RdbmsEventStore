@@ -32,8 +32,9 @@ namespace RdbmsEventStore.EntityFramework
         {
             var storedEvents = await _context.Events
                 .AsNoTracking()
-                .Apply(query)
                 .OrderBy(e => e.Timestamp)
+                .ThenBy(e => e.Version)
+                .Apply(query)
                 .ToListAsync();
 
             var events = storedEvents
@@ -43,9 +44,10 @@ namespace RdbmsEventStore.EntityFramework
             return events;
         }
 
-        public async Task Append(TStreamId streamId, long versionBefore, IEnumerable<object> payloads)
+        public async Task Append(TStreamId streamId, DateTimeOffset? versionBefore, IEnumerable<object> payloads)
         {
-            if (!payloads.Any()) {
+            if (!payloads.Any())
+            {
                 return;
             }
 
@@ -53,16 +55,24 @@ namespace RdbmsEventStore.EntityFramework
             {
                 var highestVersionNumber = await _context.Events
                     .Where(e => e.StreamId.Equals(streamId))
-                    .Select(e => e.Version)
-                    .DefaultIfEmpty(0)
-                    .MaxAsync();
+                    .Select(e => e.Timestamp)
+                    .DefaultIfEmpty(DateTimeOffset.MinValue)
+                    .MaxAsync() as DateTimeOffset?;
+                if (highestVersionNumber == DateTimeOffset.MinValue)
+                {
+                    highestVersionNumber = null;
+                }
 
                 if (highestVersionNumber != versionBefore)
                 {
                     throw new ConflictException(streamId, versionBefore, highestVersionNumber, payloads);
                 }
 
-                var events = _eventFactory.Create(streamId, versionBefore, payloads).Select(_serializer.Serialize);
+                var events = _eventFactory
+                    .Create(streamId, payloads)
+                    .Select(_serializer.Serialize)
+                    .VersionedPerTimestamp<TPersistedEvent, TStreamId>();
+
                 _context.Events.AddRange(events);
                 await _context.SaveChangesAsync();
             }

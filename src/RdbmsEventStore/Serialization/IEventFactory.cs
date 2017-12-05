@@ -4,6 +4,6 @@ namespace RdbmsEventStore.Serialization
 {
     public interface IEventFactory<in TStreamId, out TEvent> where TEvent : IEvent<TStreamId>
     {
-        IEnumerable<TEvent> Create(TStreamId streamId, long version, IEnumerable<object> payloads);
+        IEnumerable<TEvent> Create(TStreamId streamId, IEnumerable<object> payloads);
     }
 }
