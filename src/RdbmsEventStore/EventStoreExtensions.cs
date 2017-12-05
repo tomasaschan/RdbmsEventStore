@@ -25,7 +25,7 @@ namespace RdbmsEventStore
             where TEventMetadata : class, IEventMetadata<TStreamId>
             => store.Events(events => events.Where(e => e.StreamId.Equals(streamId)).Apply(query));
 
-        public static Task Append<TStreamId, TEvent, TEventMetadata>(this IEventStore<TStreamId, TEvent, TEventMetadata> store, TStreamId streamId, DateTimeOffset versionBefore, object payload)
+        public static Task Append<TStreamId, TEvent, TEventMetadata>(this IEventStore<TStreamId, TEvent, TEventMetadata> store, TStreamId streamId, DateTimeOffset? versionBefore, object payload)
             where TStreamId : IEquatable<TStreamId>
             where TEvent : class, TEventMetadata, IEvent<TStreamId>
             where TEventMetadata : class, IEventMetadata<TStreamId>
