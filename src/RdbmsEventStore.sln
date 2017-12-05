@@ -1,7 +1,6 @@
-
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2005
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore", "RdbmsEventStore\RdbmsEventStore.csproj", "{4EBC13FC-FB6E-4B51-9EFD-A867434E8953}"
 EndProject
@@ -25,6 +24,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore.Tests", "Rd
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdbmsEventStore.EntityFramework.Tests", "RdbmsEventStore.EntityFramework.Tests\RdbmsEventStore.EntityFramework.Tests.csproj", "{0096C881-9347-454E-B0A0-73C7CABDBF37}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdbmsEventStore.EFCore.Tests", "RdbmsEventStore.EFCore.Tests\RdbmsEventStore.EFCore.Tests.csproj", "{E0F240DB-17CB-4388-B9FA-FED3D0EC4499}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdbmsEventStore.EFCore", "RdbmsEventStore.EFCore\RdbmsEventStore.EFCore.csproj", "{93044D18-12C9-4F0B-B509-0F8585465909}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -47,6 +50,14 @@ Global
 		{0096C881-9347-454E-B0A0-73C7CABDBF37}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0096C881-9347-454E-B0A0-73C7CABDBF37}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0096C881-9347-454E-B0A0-73C7CABDBF37}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0F240DB-17CB-4388-B9FA-FED3D0EC4499}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0F240DB-17CB-4388-B9FA-FED3D0EC4499}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0F240DB-17CB-4388-B9FA-FED3D0EC4499}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0F240DB-17CB-4388-B9FA-FED3D0EC4499}.Release|Any CPU.Build.0 = Release|Any CPU
+		{93044D18-12C9-4F0B-B509-0F8585465909}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93044D18-12C9-4F0B-B509-0F8585465909}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93044D18-12C9-4F0B-B509-0F8585465909}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93044D18-12C9-4F0B-B509-0F8585465909}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -54,6 +65,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{E58D4AE3-79B6-4B36-9693-9D852222D06E} = {B3BDC65F-EA8A-4CDC-85FC-0AA1C48C95A8}
 		{0096C881-9347-454E-B0A0-73C7CABDBF37} = {B3BDC65F-EA8A-4CDC-85FC-0AA1C48C95A8}
+		{E0F240DB-17CB-4388-B9FA-FED3D0EC4499} = {B3BDC65F-EA8A-4CDC-85FC-0AA1C48C95A8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {CA4860B3-3208-41C0-8FB9-719E00FBAD0D}
