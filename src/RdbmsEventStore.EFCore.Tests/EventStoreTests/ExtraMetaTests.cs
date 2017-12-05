@@ -23,13 +23,13 @@ namespace RdbmsEventStore.EFCore.Tests.EventStoreTests
                 .Options;
             _dbContext = new EFCoreEventStoreContext<string, ExtraMetaLongStringPersistedEventMetadata>(options);
 
-            var stream1 = _fixture.EventFactory.Create("stream-1", 0, new object[] {
+            var stream1 = _fixture.EventFactory.Create("stream-1", new object[] {
                     new FooEvent { Foo = "Foo" },
                     new BarEvent { Bar = "Bar" },
                     new FooEvent { Foo = "Baz" }
                 })
                 .Select(_fixture.EventSerializer.Serialize);
-            var stream2 = _fixture.EventFactory.Create("stream-2", 0, new object[] {
+            var stream2 = _fixture.EventFactory.Create("stream-2", new object[] {
                     new FooEvent { Foo = "Boo" },
                     new BarEvent { Bar = "Far" }
                 })
@@ -89,9 +89,9 @@ namespace RdbmsEventStore.EFCore.Tests.EventStoreTests
     {
         private int _total;
 
-        protected override ExtraMetaStringEvent CreateSingle(string streamId, long version, object payload)
+        protected override ExtraMetaStringEvent CreateSingle(string streamId, object payload)
         {
-            var @event = base.CreateSingle(streamId, version, payload);
+            var @event = base.CreateSingle(streamId, payload);
             @event.ExtraMeta = $"{payload.GetType().Name}-{_total++}";
             return @event;
         }

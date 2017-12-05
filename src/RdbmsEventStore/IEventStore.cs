@@ -12,6 +12,6 @@ namespace RdbmsEventStore
     {
         Task<IEnumerable<TEvent>> Events(Func<IQueryable<TEventMetadata>, IQueryable<TEventMetadata>> query);
 
-        Task Append(TStreamId streamId, long versionBefore, IEnumerable<object> payloads);
+        Task Append(TStreamId streamId, DateTimeOffset? versionBefore, IEnumerable<object> payloads);
     }
 }

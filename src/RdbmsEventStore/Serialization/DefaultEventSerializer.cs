@@ -25,7 +25,6 @@ namespace RdbmsEventStore.Serialization
             {
                 StreamId = @event.StreamId,
                 Timestamp = @event.Timestamp,
-                Version = @event.Version,
                 Type = type,
                 Payload = payload
             };
@@ -41,7 +40,6 @@ namespace RdbmsEventStore.Serialization
             {
                 StreamId = @event.StreamId,
                 Timestamp = @event.Timestamp,
-                Version = @event.Version,
                 Type = type,
                 Payload = payload
             };
