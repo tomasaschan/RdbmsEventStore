@@ -13,15 +13,15 @@ namespace RdbmsEventStore.EFCore.Tests.Infrastructure
         where TPersistedEvent : class, TEventMetadata, IPersistedEvent<TStreamId>, new()
     {
         protected readonly EventStoreFixture<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent> _fixture;
-        protected readonly EFCoreContext<TStreamId, TPersistedEvent> _dbContext;
+        protected readonly EFCoreEventStoreContext<TStreamId, TPersistedEvent> _dbContext;
 
         public EventStoreTestBase(EventStoreFixture<TId, TStreamId, TEvent, TEventMetadata, TPersistedEvent> fixture)
         {
             _fixture = fixture;
-            var options = new DbContextOptionsBuilder<EFCoreContext<TStreamId, TPersistedEvent>>()
+            var options = new DbContextOptionsBuilder<EFCoreEventStoreContext<TStreamId, TPersistedEvent>>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            _dbContext = new EFCoreContext<TStreamId, TPersistedEvent>(options);
+            _dbContext = new EFCoreEventStoreContext<TStreamId, TPersistedEvent>(options);
         }
 
         public void Dispose()

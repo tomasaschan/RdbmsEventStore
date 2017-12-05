@@ -37,7 +37,7 @@ namespace RdbmsEventStore.EFCore.Tests.ExtensibilityTests
         public byte[] Payload { get; set; }
     }
 
-    public class NonDefaultContext : DbContext, IEventDbContext<NonDefaultPersistedEvent>
+    public class NonDefaultContext : DbContext, IEFCoreEventStoreContext<NonDefaultPersistedEvent>
     {
         public NonDefaultContext(DbContextOptions<NonDefaultContext> options) : base(options)
         {

@@ -3,13 +3,13 @@ using RdbmsEventStore.Serialization;
 
 namespace RdbmsEventStore.EFCore
 {
-    public class EFCoreContext<TStreamId, TEvent> : DbContext, IEventDbContext<TEvent> where TEvent : class, IPersistedEvent<TStreamId>
+    public class EFCoreEventStoreContext<TStreamId, TEvent> : DbContext, IEFCoreEventStoreContext<TEvent> where TEvent : class, IPersistedEvent<TStreamId>
     {
-        public EFCoreContext()
+        public EFCoreEventStoreContext()
         {
         }
 
-        public EFCoreContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
+        public EFCoreEventStoreContext(DbContextOptions dbContextOptions) : base(dbContextOptions)
         {
         }
 

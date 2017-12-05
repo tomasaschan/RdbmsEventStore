@@ -11,7 +11,7 @@ namespace RdbmsEventStore.EFCore
         : IEventStore<TStreamId, TEvent, TEventMetadata>
         where TId : IEquatable<TId>
         where TStreamId : IEquatable<TStreamId>
-        where TEventStoreContext : DbContext, IEventDbContext<TPersistedEvent>
+        where TEventStoreContext : DbContext, IEFCoreEventStoreContext<TPersistedEvent>
         where TEvent : class, TEventMetadata, IMutableEvent<TStreamId>, new()
         where TPersistedEvent : class, IPersistedEvent<TStreamId>, TEventMetadata, new()
         where TEventMetadata : class, IEventMetadata<TStreamId>

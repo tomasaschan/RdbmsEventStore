@@ -28,7 +28,7 @@ namespace RdbmsEventStore.EFCore.Tests.Infrastructure
         public IWriteLock<TStreamId> WriteLock { get; protected set; }
 
         public EFCoreEventStore<TId, TStreamId, TEventStoreContext, TEvent, TEventMetadata, TPersistedEvent> BuildEventStore<TEventStoreContext>(TEventStoreContext dbContext)
-            where TEventStoreContext : DbContext, IEventDbContext<TPersistedEvent>
+            where TEventStoreContext : DbContext, IEFCoreEventStoreContext<TPersistedEvent>
             => new EFCoreEventStore<TId, TStreamId, TEventStoreContext, TEvent, TEventMetadata, TPersistedEvent>(dbContext, EventFactory, WriteLock, EventSerializer);
     }
 

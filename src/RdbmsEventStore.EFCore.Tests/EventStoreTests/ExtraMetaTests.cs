@@ -13,15 +13,15 @@ namespace RdbmsEventStore.EFCore.Tests.EventStoreTests
     public class ExtraMetaTests : IClassFixture<ExtraMetaEventFactoryFixture>
     {
         private readonly ExtraMetaEventFactoryFixture _fixture;
-        private readonly EFCoreContext<string, ExtraMetaLongStringPersistedEventMetadata> _dbContext;
+        private readonly EFCoreEventStoreContext<string, ExtraMetaLongStringPersistedEventMetadata> _dbContext;
 
         public ExtraMetaTests(ExtraMetaEventFactoryFixture fixture)
         {
             _fixture = fixture;
-            var options = new DbContextOptionsBuilder<EFCoreContext<string, ExtraMetaLongStringPersistedEventMetadata>>()
+            var options = new DbContextOptionsBuilder<EFCoreEventStoreContext<string, ExtraMetaLongStringPersistedEventMetadata>>()
                 .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
-            _dbContext = new EFCoreContext<string, ExtraMetaLongStringPersistedEventMetadata>(options);
+            _dbContext = new EFCoreEventStoreContext<string, ExtraMetaLongStringPersistedEventMetadata>(options);
 
             var stream1 = _fixture.EventFactory.Create("stream-1", 0, new object[] {
                     new FooEvent { Foo = "Foo" },

@@ -2,7 +2,7 @@
 
 namespace RdbmsEventStore.EFCore
 {
-    public interface IEventDbContext<TEvent> where TEvent : class
+    public interface IEFCoreEventStoreContext<TEvent> where TEvent : class
     {
         DbSet<TEvent> Events { get; }
     }
