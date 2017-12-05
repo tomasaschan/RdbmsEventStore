@@ -1,4 +1,5 @@
 ﻿using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using EventSourcing.PoC.Application.Events;
 using MediatR;
@@ -6,16 +7,16 @@ using RdbmsEventStore;
 
 namespace EventSourcing.PoC.Application.Messaging
 {
-    public class LatestMessageQueryHandler : IAsyncRequestHandler<LatestMessageQuery, string>
+    public class LatestMessageQueryHandler : IRequestHandler<LatestMessageQuery, string>
     {
-        private readonly IEventStream<string, Event, IEventMetadata<string>> _eventStream;
+        private readonly IEventStore<string, Event, IEventMetadata<string>> _eventStream;
 
-        public LatestMessageQueryHandler(IEventStream<string, Event, IEventMetadata<string>> eventStream)
+        public LatestMessageQueryHandler(IEventStore<string, Event, IEventMetadata<string>> eventStream)
         {
             _eventStream = eventStream;
         }
 
-        public async Task<string> Handle(LatestMessageQuery _)
+        public async Task<string> Handle(LatestMessageQuery _, CancellationToken token)
         {
             var events = await _eventStream.Events("1");
             var message = events.Aggregate("", (current, evt) =>

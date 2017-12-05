@@ -2,7 +2,7 @@
 
 namespace EventSourcing.PoC.Persistence
 {
-    public class EventsContext : EventStoreContext<Event>
+    public class EventsContext : EntityFrameworkEventStoreContext<Event>
     {
         public EventsContext() : base("name=EventSourcingPoC") { }
     }

@@ -25,13 +25,8 @@ namespace EventSourcing.PoC.Web.Configuration.ServiceRegistrations
             var mediatrOpenTypes = new[]
             {
                 typeof(IRequestHandler<>),
-                typeof(IAsyncRequestHandler<>),
                 typeof(IRequestHandler<,>),
-                typeof(IAsyncRequestHandler<,>),
-                typeof(ICancellableAsyncRequestHandler<,>),
-                typeof(INotificationHandler<>),
-                typeof(IAsyncNotificationHandler<>),
-                typeof(ICancellableAsyncNotificationHandler<>)
+                typeof(INotificationHandler<>)
             };
 
             foreach (var markerType in _markerTypes)

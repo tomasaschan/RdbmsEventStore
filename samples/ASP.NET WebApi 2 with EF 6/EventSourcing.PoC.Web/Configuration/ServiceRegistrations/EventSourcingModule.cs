@@ -17,7 +17,7 @@ namespace EventSourcing.PoC.Web.Configuration.ServiceRegistrations
     {
         protected override void Load(ContainerBuilder builder)
         {
-            builder.RegisterAssemblyTypes(typeof(IEventStream<,,>).GetTypeInfo().Assembly).AsImplementedInterfaces().SingleInstance();
+            builder.RegisterAssemblyTypes(typeof(IEventStore<,,>).GetTypeInfo().Assembly).AsImplementedInterfaces().SingleInstance();
 
             builder.RegisterInstance(new TranslatingEventRegistry(
                 new Dictionary<string, string>
